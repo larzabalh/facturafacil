@@ -1,0 +1,175 @@
+{% extends 'CHOMPSGIBundle::chompBaseTemplate.html.twig' %}
+
+{% block title %}
+	Configuracion {% block subtitle %} Default Subtitle {% endblock %} 
+{% endblock %} 
+
+
+{% block body %}
+		<script>
+			function hideOrShowPassword(){
+				checkbox = document.getElementById('checkbox');
+				passField = document.getElementById('pswd');
+				passFieldDos = document.getElementById('contrasenaRep');	
+				if(checkbox.checked==true)
+				{
+					passField.type = "text";
+					passFieldDos.type = "hidden";
+				}
+				else
+				{	
+					passFieldDos.type = "password";
+					passField.type = "password";
+				}
+			}
+		</script>
+		<div class="control-group" style="text-align: center">
+		    
+		    <div class="controls">
+			    <div class="row-fluid">
+				    <div class="input-prepend span2 offset5">
+					    <span class="add-on"><i class="icon-lock"></i></span>
+					    <input  id="pswd" name="pswd" type="password" placeholder="Nueva Contraseña" style="width: 80%" />	
+				    </div>
+				    <div class="span2" style="margin-left: 0; margin-top:4px; padding-left: 10px; text-align:left; float:left">
+						<input type="checkbox" name="checkbox" id="checkbox" onClick="hideOrShowPassword();" style="float:left; margin-right:5px; padding-top: 3px"/>
+						<div style="padding: 0 5px;"><i> Ver contraseña</i></div>
+				    </div>
+				</div>
+		    </div> 
+		    <div class="controls">
+				<div class="row-fluid">
+				    <div class="input-prepend span2 offset5">
+					    <span class="add-on"><i class="icon-lock"></i></span>
+					    <input  id="contrasenaRep" name="contrasenaRep" type="password" placeholder="Repita Contraseña"  style="width: 80%">
+				    </div>
+			    </div>
+		    </div>
+
+
+		    <a href="#" class="btn btn-default" onClick="validar();">Cambiar</a>
+	    </div>
+		<h4 style="text-align: center;">La clave debe tener {{ empresa.strClave }}.</h4>
+	<script>
+		function validar()
+		{
+			var login = "{{ login }}";
+			var contrasenaN = document.getElementById('pswd').value;
+			var reg = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+			var strReg = '{{ empresa.regClave }}';
+			
+			{% if empresa.regClave != '' %}
+				arrayReg = strReg.split(",");
+				var inc = 0;
+				var verdad = 'true';
+
+				while( inc < arrayReg.length && verdad == 'true'){
+
+					var reg;
+					
+					if(arrayReg[inc].trim() == "/[a-z]/"){
+						reg = /[a-z]/; 
+					}
+
+					if(arrayReg[inc].trim() == "/[A-Z]/"){
+						reg = /[A-Z]/;
+					}
+					if(arrayReg[inc].trim() == "/\d/"){
+						reg = /\d/;
+					}
+					if(arrayReg[inc].trim() == "/\w/"){
+						reg = /\w/;
+					}
+					if(arrayReg[inc].trim() == "/\s/"){
+						reg = /\s/;
+					}
+					
+					if(contrasenaN.length >= arrayReg[0].trim() && $("#pswd").val().match(reg)){
+						verdad = 'true';
+					}else{
+						alert('La clave debe tener {{ empresa.strClave }}');
+						verdad = 'false';
+					}
+					inc++;
+				}
+				if(verdad == 'true'){
+					restoComp(contrasenaN);
+				}
+				
+			{% else %}			
+				if($("#pswd").val().match(reg)){
+					restoComp(contrasenaN);
+				}else{
+					alert('La clave debe tener {{ empresa.strClave }}');
+				}
+			{% endif %}			
+		}	
+		
+		function restoComp(contrasenaN){
+			var login = "{{ login }}";
+			if(contrasenaN.trim()!='' && document.getElementById('contrasenaRep').type=='hidden'){
+				var route = "{{ path('chompsgi_cambiar_clave', { 'login': "LOGIN", 'pass': "CONTRA"  }) }}";
+				route = route.replace("LOGIN", login);
+				var route2 = route.replace("CONTRA", contrasenaN);
+				window.location.href = route2; 		
+			}else{
+				if(contrasenaN.trim()!='' && document.getElementById('contrasenaRep').type!='hidden' && contrasenaN == document.getElementById('contrasenaRep').value){
+					var route = "{{ path('chompsgi_cambiar_clave', { 'login': "LOGIN", 'pass': "CONTRA"  }) }}";
+					route = route.replace("LOGIN", login);
+					var route2 = route.replace("CONTRA", contrasenaN);
+					window.location.href = route2; 		
+				}else{
+					if(contrasenaN.trim()=='' || contrasenaR.trim()==''){
+						alert('Debe completar ambos campos.');
+					}else{
+						alert('Las claves deben ser iguales.');
+					}			
+				}
+			}	
+		}
+
+	</script>    
+	<script src="http://code.jquery.com/jquery-1.7.min.js"></script>
+	<script>
+/*	$(document).ready(function() {
+	
+		$('input[type=password]').keyup(function() {
+			// set password variable
+			var pswd = $(this).val();
+			//validate the length
+			if ( pswd.length < 8 ) {
+				$('#length').removeClass('valid').addClass('invalid');
+			} else {
+				$('#length').removeClass('invalid').addClass('valid');
+			}
+	
+			//validate letter
+			if ( pswd.match(/[A-z]/) ) {
+				$('#letter').removeClass('invalid').addClass('valid');
+			} else {
+				$('#letter').removeClass('valid').addClass('invalid');
+			}
+	
+			//validate capital letter
+			if ( pswd.match(/[A-Z]/) ) {
+				$('#capital').removeClass('invalid').addClass('valid');
+			} else {
+				$('#capital').removeClass('valid').addClass('invalid');
+			}
+	
+			//validate number
+			if ( pswd.match(/\d/) ) {
+				$('#number').removeClass('invalid').addClass('valid');
+			} else {
+				$('#number').removeClass('valid').addClass('invalid');
+			}
+	
+		}).focus(function() {
+			$('#pswd_info').show();
+		}).blur(function() {
+			$('#pswd_info').hide();
+		});
+	
+	});*/
+	</script>
+{% endblock %}

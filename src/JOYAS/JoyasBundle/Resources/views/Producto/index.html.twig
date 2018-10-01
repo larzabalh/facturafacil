@@ -1,0 +1,95 @@
+{% extends 'JOYASJoyasBundle::base.html.twig' %}
+{% block content -%}
+	<div class="preloader">
+		<div class="sk-spinner sk-spinner-rotating-plane"></div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">
+				Productos
+			{% if perfil == 'ADMIN' or perfil == 'ADMINISTRADOR' %}
+				<a style="float:right;" class="btn btn-default" href="{{ path('producto_new') }}">
+					Crear
+				</a>
+			{% endif %}
+			</h1>
+		</div>
+	</div>
+	<div class="tablasScroll wrapper">
+		<div class="gimme-table" data-cls="demo1">
+		<table id="tablas" class="display">
+			<thead>
+				<tr>
+					<th>C&oacute;digo</th>
+					<th>Cate. - Subcate.</th>
+					<th>Descripci&oacute;n</th>
+					<th>Stock</th>
+					{% if perfil == 'ADMINISTRADOR' %}							
+					<th>Unidad</th>
+					{% endif %}
+					{% if perfil == 'ADMIN' or perfil == 'ADMINISTRADOR'%}
+					<th>Costo</th>
+					<th>Acciones</th>
+					{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+			{% for entity in entities %}
+				<tr>
+					<td>{{ entity.codigo }}</td>
+					<td>{{ entity.categoriasubcategoria|default('OTROS') }}</td>
+					<td><a href="{{ path('producto_show', { 'id': entity.id }) }}">{{ entity.descripcion }}</a></td>
+					<td>{{ entity.stock }}</td>
+					{% if perfil == 'ADMINISTRADOR' %}							
+					<td>{{ entity.unidadNegocio }}</td>
+					{% endif %}
+					{% if perfil == 'ADMIN' or perfil == 'ADMINISTRADOR' %}
+					<td>{{ entity.monedaStr }} {{ entity.costo }}</td>
+					<td>
+						<a class="btn btn-default" href="{{ path('producto_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="Editar"><i class="fa fa-pencil"></i></a>
+						<a class="btn btn-default" href="{{ path('precio_prodEdit', { 'id': entity.id }) }}" data-toggle="tooltip" title="Precio"><i class="fa fa-dollar"></i></a>
+						<!-- /.modal -->
+						<button class="btn btn-default" data-toggle="modal" data-target="#modal{{entity.id}}" title="Generar Barras">
+							<i class="fa fa-barcode"></i>
+						</button>
+						<div class="modal fade" id="modal{{entity.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+										<h4 class="modal-title" id="myModalLabel">Generar C&oacute;digo de barras - "{{entity.codigo}}"</h4>
+									</div>
+									<div class="modal-body">
+									</div>
+									<div class="modal-footer" style="margin-top: 1%;">
+										<button type="button" class="btn btn-default" onclick="cantidad('{{entity.codigo}}');">Imprimir</button>
+										<a href="http://www.sistemastitanio.com.ar/barcode/html/image.php?filetype=PNG&dpi=72&scale=1&rotation=0&font_family=Arial.ttf&font_size=8&text={{entity.codigo}}&thickness=20&checksum=&code=BCGcode128" type="button" class="btn btn-default" download="Barras - {{ entity.codigo }}">Descargar</a>
+										<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
+					</td>
+					{% endif %}
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	</div>
+<script>
+	$('document').ready(function(){
+		$('td').css('padding', '2px');
+	});
+	activarMenuTab('gestion');	
+	activarActionsTab('producto');
+
+	function cantidad(cod) {
+		window.location.href='{{ path('producto_imprimirCodigo') }}?num=21&cod='+cod;		
+	}
+
+</script>
+{% endblock %}

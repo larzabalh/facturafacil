@@ -1,0 +1,30 @@
+puntoventa:
+    path:     /
+    defaults: { _controller: "JOYASJoyasBundle:PuntoVenta:index" }
+
+puntoventa_show:
+    path:     /{id}/show
+    defaults: { _controller: "JOYASJoyasBundle:PuntoVenta:show" }
+
+puntoventa_new:
+    path:     /new
+    defaults: { _controller: "JOYASJoyasBundle:PuntoVenta:new" }
+
+puntoventa_create:
+    path:     /create
+    defaults: { _controller: "JOYASJoyasBundle:PuntoVenta:create" }
+    requirements: { _method: post }
+
+puntoventa_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "JOYASJoyasBundle:PuntoVenta:edit" }
+
+puntoventa_update:
+    path:     /{id}/update
+    defaults: { _controller: "JOYASJoyasBundle:PuntoVenta:update" }
+    requirements: { _method: post|put }
+
+puntoventa_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "JOYASJoyasBundle:PuntoVenta:delete" }
+    requirements: { _method: post|delete }

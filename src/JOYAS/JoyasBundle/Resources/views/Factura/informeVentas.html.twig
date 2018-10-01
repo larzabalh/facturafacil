@@ -1,0 +1,44 @@
+{% extends 'JOYASJoyasBundle::base.html.twig' %}
+{% block content -%}
+    <div class="controls filtrocuerpo">
+        <form action="{{ path('factura_informe') }}" method="POST" style="margin-top: 20px;" autocomplete="off">
+            <div class="control-group" style="text-align: center">
+                <div class="controls">
+                    Punto de Venta:
+                    <select name="puntoVenta" class="form-control col-xs-12" >
+                        <option value="">Todos los puntos de Venta</option>
+                        <option value="12">Sucursal Libertad</option>
+                    </select>
+                    Per&iacute;odo: 
+                    <input onblur="comprobar();" required type="text" class="form-control col-xs-12"  id="fechaDesde" name="fechaDesde" placeholder="fecha desde" onkeydown="return false">
+                    <input onblur="comprobar();" required type="text" class="form-control col-xs-12"  id="fechaHasta" name="fechaHasta" placeholder="fecha hasta" onkeydown="return false">													
+                    <br>
+                    Agrupamiento:
+                    <select name="agrupado" class="form-control col-xs-12" >
+                        <option value="1">Diario</option>
+                        <option value="2">Mensual</option>
+                    </select>
+                </div>                
+                <br />
+                <button class="btn btn-default" type="submit">Ingresar</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        activarActionsTab('informeVentas');
+        function comprobar() {
+            var desde = $('#fechaDesde').val();
+            var hasta = $('#fechaHasta').val();
+            var aFecha1 = desde.split('-');
+            var aFecha2 = hasta.split('-');
+            var fFecha1 = Date.UTC(aFecha1[2], aFecha1[1] - 1, aFecha1[0]);
+            var fFecha2 = Date.UTC(aFecha2[2], aFecha2[1] - 1, aFecha2[0]);
+            var dif = fFecha2 - fFecha1;
+            var dias = Math.floor(dif / (1000 * 60 * 60 * 24));
+            if (dias > 365) {
+                $('#fechaHasta').val("");
+                alert('El período entre fechas debe ser menor a 365 días.');
+            }
+        }
+    </script>
+{% endblock %}

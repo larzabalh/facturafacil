@@ -1,0 +1,3 @@
+joyas:
+   resource: "@JOYASJoyasBundle/Resources/config/routing.yml"
+   prefix:   /

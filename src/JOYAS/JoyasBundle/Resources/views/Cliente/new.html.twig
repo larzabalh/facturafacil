@@ -1,0 +1,21 @@
+{% extends 'JOYASJoyasBundle::base.html.twig' %}
+
+{% block content -%}
+    <h1>Creaci&oacute;n de Cliente</h1>
+
+    <div class="joyas-container" style="width: 50% !important; margin: 0 auto;">
+		<div class="container">
+			{{ form(form) }}
+			<a id="volver" class="btn btn-default" href="{{ path('cliente') }}">
+				Volver
+			</a>
+		</div>
+	</div>
+<script>	
+	
+	$( document ).ready(function() {
+		$("input").attr('class','form-control');
+	});	
+	activarActionsTab('clienteproveedor');
+</script>
+{% endblock %}

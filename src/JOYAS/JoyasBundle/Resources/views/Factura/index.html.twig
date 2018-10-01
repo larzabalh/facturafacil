@@ -1,0 +1,84 @@
+{% extends 'JOYASJoyasBundle::base.html.twig' %}
+{% block content -%}
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">Ventas
+                <a class="btn btn-success" href="{{ path('factura_new') }}" style="float: right;">
+    				Registrar Venta
+                </a>
+			</h1>
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<div class="row-fluid filtro">
+		<form id="searchForm" action="{{ path('factura_filtro') }}" method="POST">
+			<li class="sidebar-search" style="width">
+				<div class="input-group custom-search-form" style="width: 70%;">
+					<input type="text" style="width:30%;" value="{{app.request.get('fechaDesde')}}" id="fechaDesde" class="form-control" name="fechaDesde" placeholder="fecha desde">
+					<input type="text" style="width:30%;" value="{{app.request.get('fechaHasta')}}" id="fechaHasta" class="form-control" name="fechaHasta" placeholder="fecha hasta">
+					<select name="listado" style="width:30%;" class="form-control">
+						<option value="0">Elegir Cliente</option>
+						{% for clienteProveedor in clientesProveedores %}
+							<option value="{{ clienteProveedor.id }}">
+								{{ clienteProveedor.razonSocial }}
+							</option>
+						{% endfor %}
+			        </select>
+					<button class="btn btn-default" type="button" onclick="$('#searchForm').submit();">
+						<i class="fa fa-search"></i>
+					</button>
+				</div>
+				<!-- /input-group -->
+			</li>
+		</form>
+	</div>
+
+	<div class="tablasScroll">
+		<table id="tablaSF" class="display">
+			<thead>
+				<tr>
+					<th>Fecha</th>
+					<th>Factura</th>
+					<th>Cliente</th>
+					<th>Importe</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for entity in entities %}
+				<tr>
+					<td>{{ entity.fecha|date('Y-m-d H:i') }}</td>
+					<td>
+                        {% if entity.nrofactura %}
+                        <a href="{{ path('factura_show', { 'id': entity.id, 'tipo':'F'}) }}">Factura {{entity.tipofactura }} - Nro: {{ entity.nrofactura|default(entity.id) }}</a> - Pto. Vta.: {{ entity.punto.numero }}
+                        {% else %}
+                        <a style="color: red;" href="{{ path('factura_show', { 'id': entity.id, 'tipo':'F'}) }}">Factura {{entity.tipofactura }} - Nro:  {{ entity.nrofactura|default(entity.id) }}</a> - Pto. Vta.: {{ entity.punto.numero }}{% if entity.punto %} - <a class="btn btn-default" href="{{ path('factura_refacturar', { 'id': entity.id}) }}"><i class="fa fa-spin fa-refresh"></i></a>{% endif %}
+                        {% endif %}
+                    </td>
+					<td>{{ entity.cliente|default('') }}</a></td>
+					<td>
+    					$ {{ entity.importe }}
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div class="col-sm-12">
+		{{ pagerfanta (entities, 'twitter_bootstrap_translated' , { 'prev_message' : 'Anterior', 'next_message': 'Siguiente'} ) }}
+	</div>
+<script>
+	$('document').ready(function(){
+		$('td').css('padding', '2px');
+		$('.pagination a').attr('class', 'btn btn-default');
+		$('.pagination li').css('float', 'left');
+		$('.pagination').css('width', '100%');
+	});
+</script>
+<style>
+.active .btn
+{
+    background-color: #9E9E9E;
+}
+</style>
+
+{% endblock %}

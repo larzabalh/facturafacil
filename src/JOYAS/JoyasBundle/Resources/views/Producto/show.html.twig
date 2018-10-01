@@ -1,0 +1,61 @@
+{% extends 'JOYASJoyasBundle::base.html.twig' %}
+
+{% block content -%}
+    <h1>Producto</h1>
+<div class="tablasScroll" style="text-align:center;">
+	<div class="tablasScroll col-md-12" style="overflow-y: auto;">
+		{% if entity.imagenesproducto|length > 0 %}
+			{% for imgp in entity.imagenesproducto %}
+				<img width="200px" src="{{ asset(imgp.WebPath) }}" />
+			{% endfor %}
+		{% else %}
+			SIN IM&Aacute;GEN
+		{% endif %}
+	</div>
+	<div class="col-md-12">
+		<table class="display" style="width: 100%;">
+			<tbody>
+				<tr>
+					<th>Categor&iacute;a</th>
+					<th>C&oacute;digo</th>
+					<th>Descripci&oacute;n</th>
+					<th>Stock</th>
+					<th>Visible</th>
+					<th>Novedad</th>
+					<th>Descuento</th>
+				</tr>
+				<tr>
+					<td>{{ entity.categoriasubcategoria|default('OTROS') }}</td>
+					<td>{{ entity.codigo }}</td>
+					<td>{{ entity.descripcion }}</td>
+					<td>{{ entity.stock }}</td>
+					<td>{% if entity.visible == 1%}SI{%else%}NO{%endif%}</td>
+					<td>{% if entity.novedad == 1%}SI{%else%}NO{%endif%}</td>
+					<td>{% if entity.descuento 	> 0 %}%{{entity.descuento}}{%else%}--{%endif%}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-md-12">
+		<div class="col-md-12" style="tet-align:center;">
+			<strong>Descripci&oacute;n ampliada del producto</strong>
+		</div>
+		<div class="col-md-12">
+			{{ entity.descripcionampliada }}
+		</div>
+	</div>
+</div>
+
+{% if perfil == 'ADMIN' %}
+<a class="btn btn-default" href="{{ path('producto_edit', { 'id': entity.id }) }}">
+	Editar
+</a>
+{% endif %}
+<a class="btn btn-default" href="javascript:history.back();">
+	Volver
+</a>
+<script>
+	
+	activarActionsTab('producto');
+</script>
+{% endblock %}

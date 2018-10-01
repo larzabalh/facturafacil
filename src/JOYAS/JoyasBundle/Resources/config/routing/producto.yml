@@ -1,0 +1,114 @@
+producto:
+    path:     /
+    defaults: { _controller: "JOYASJoyasBundle:Producto:index" }
+
+producto_ajuste:
+    path:     /ajuste
+    defaults: { _controller: "JOYASJoyasBundle:Producto:ajuste" }
+
+producto_predictiva:
+    path:     /predictiva
+    defaults: { _controller: "JOYASJoyasBundle:Producto:predictiva" }
+
+producto_predictivaconprecio:
+    path:     /predictivaconprecio
+    defaults: { _controller: "JOYASJoyasBundle:Producto:predictivaconprecio" }
+
+producto_filtroprecios:
+    path:     /filtroprecios
+    defaults: { _controller: "JOYASJoyasBundle:Producto:filtroprecios" }
+
+producto_show:
+    path:     /{id}/show
+    defaults: { _controller: "JOYASJoyasBundle:Producto:show" }
+
+producto_categorias:
+    path:     /{id}/categorias
+    defaults: { _controller: "JOYASJoyasBundle:Producto:categorias" }
+
+producto_web:
+    path:     /{id}/web
+    defaults: { _controller: "JOYASJoyasBundle:Producto:web" }
+
+producto_carritoajax:
+    path:     /carritoajax
+    defaults: { _controller: "JOYASJoyasBundle:Producto:carritoajax" }
+
+producto_quitarajax:
+    path:     /quitarajax
+    defaults: { _controller: "JOYASJoyasBundle:Producto:quitarajax" }
+
+producto_vaciarajax:
+    path:     /vaciarajax
+    defaults: { _controller: "JOYASJoyasBundle:Producto:vaciarajax" }
+
+producto_filtro:
+    path:     /filtro
+    defaults: { _controller: "JOYASJoyasBundle:Producto:filtro" }
+
+producto_buscarweb:
+    path:     /buscarweb
+    defaults: { _controller: "JOYASJoyasBundle:Producto:buscarweb" }
+
+producto_filtroP:
+    path:     /filtroP
+    defaults: { _controller: "JOYASJoyasBundle:Producto:filtroP" }
+
+producto_new:
+    path:     /new
+    defaults: { _controller: "JOYASJoyasBundle:Producto:new" }
+
+producto_imprimirCodigo:
+    path:     /imprimirCodigo
+    defaults: { _controller: "JOYASJoyasBundle:Producto:imprimirCodigo" }
+
+producto_create:
+    path:     /create
+    defaults: { _controller: "JOYASJoyasBundle:Producto:create" }
+    requirements: { _method: post }
+
+producto_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "JOYASJoyasBundle:Producto:edit" }
+
+producto_update:
+    path:     /{id}/update
+    defaults: { _controller: "JOYASJoyasBundle:Producto:update" }
+    requirements: { _method: post }
+
+producto_stock:
+    path:     /{id}/stock
+    defaults: { _controller: "JOYASJoyasBundle:Producto:stock" }
+    requirements: { _method: post|put }
+
+producto_costo:
+    path:     /{id}/costo
+    defaults: { _controller: "JOYASJoyasBundle:Producto:costo" }
+
+producto_altaCosto:
+    path:     /{id}/altaCosto
+    defaults: { _controller: "JOYASJoyasBundle:Producto:altaCosto" }
+
+producto_costoEditar:
+    path:     /{id}/costoEditar
+    defaults: { _controller: "JOYASJoyasBundle:Producto:costoEditar" }
+
+producto_editarCosto:
+    path:     /{id}/editarCosto
+    defaults: { _controller: "JOYASJoyasBundle:Producto:editarCosto" }
+
+producto_predictiva:
+    path:     /predictiva
+    defaults: { _controller: "JOYASJoyasBundle:Producto:predictiva" }
+
+producto_predictivaconprecio:
+    path:     /predictivaconprecio
+    defaults: { _controller: "JOYASJoyasBundle:Producto:predictivaconprecio" }
+
+producto_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "JOYASJoyasBundle:Producto:delete" }
+    requirements: { _method: post|delete }
+producto_informeStock:
+    path:     /informeStock
+    defaults: { _controller: "JOYASJoyasBundle:Producto:informeStock" }

@@ -1,0 +1,35 @@
+{% extends 'JOYASJoyasBundle::base.html.twig' %}
+
+{% block content -%}
+	<h1 style="margin-bottom:10px;">
+		Condici&oacute;n IVA
+		<a style="float: right;" class="btn btn-default" href="{{ path('condicioniva_new') }}">
+			Crear
+		</a>
+	</h1>
+
+	<div class="tablasScroll">
+		<table id="tablas" class="display">
+			<thead>
+				<tr>
+					<th>Descripci&oacute;n</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for entity in entities %}
+				<tr>
+					<td>{{ entity.descripcion }}</td>
+					<td>
+						<a class="btn btn-default" href="{{ path('condicioniva_edit', { 'id': entity.id }) }}"><i class="fa fa-pencil"></i></a>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+    <script>
+	
+	activarActionsTab('condicioniva');
+</script>
+{% endblock %}

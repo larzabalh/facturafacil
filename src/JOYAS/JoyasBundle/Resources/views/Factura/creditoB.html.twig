@@ -1,0 +1,248 @@
+{% extends 'JOYASJoyasBundle::base.html.twig' %}
+{% block content -%}
+{% set codigobarras = usuario.cuit~entity.punto.numero~''~entity.cae~''~entity.fechavtocae|date('Ymd') %}
+    <div id="imprimir">
+        <header style="width: 100%; text-align:center;">
+            <table id="content" class="display" cellspacing="0" width="100%" style="border:  1px solid;margin-top: 1%;">
+                <thead>
+                    <tr style="">
+                        <th colspan="2" style="font-size: 1.8em; width: 50%;">{% if entity.usuario.imagen %}<img src="{{entity.usuario.imagenBlob}}" style="width:50%;" />{% else %}{{entity.usuario.razonSocial}}{% endif %}</th>
+                        <th style="border:  1px solid;" colspan="2">
+                            <span style="text-align: center;font-size: 60px;">B</span> <br /> <span style="font-size: 14px;">cod. 08</span>
+                        </th>
+                        <th colspan="2" style="font-size: 28px;">NOTA DE CR&Eacute;DITO</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="">Raz&oacute;n Social:
+                            <span style="font-weight: normal;">{{usuario.razonSocial}}</span>
+                        </th>
+                        <th style="border-right: 1px solid;"></th>
+                        <th></th>
+                        <th colspan="2">Punto Vta: {{entity.punto.numero}} - Comp. Nro: <span style="font-weight: normal;">{{entity.nrofactura }}</span></th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="">
+                            Domicilio Comercial:<span style="font-weight: normal;">{{usuario.domicilio}}</span>
+                        </th>
+                        <th style="border-right: 1px solid;"></th>
+                        <th></th>
+                        <th colspan="2">CUIT: <span style="font-weight: normal;">{{usuario.cuit}}</span></th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="">
+                            Condici&oacute;n Frente al IVA: <span style="font-weight: normal;">{{entity.usuario.condicioniva}}</span>
+                        </th>
+                        <th style="border-right: 1px solid;"></th>
+                        <th></th>
+                        <th colspan="2">Ingresos Brutos:<span style="font-weight: normal;">{{usuario.iibb}}</span></th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid;">
+                        <th colspan="2" style="">
+                            Fecha de Emisi&oacute;n: <span style="font-weight: normal;">{{entity.fecha|date('d/m/Y')}}</span>
+                        </th>
+                        <th style="border-right: 1px solid;"></th>
+                        <th></th>
+                        <th colspan="2">
+                            Fecha de Inicio de Actividades: <span style="font-weight: normal;">{{usuario.fechainicio}}</span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="">
+                            {% if entity.cliente.cuit %}
+                                CUIT: <span style="font-weight: normal;">{{entity.cliente.cuit}}</span>
+                            {% else %}
+                                DNI: <span style="font-weight: normal;">{{entity.cliente.dni}}</span>
+                            {% endif %}
+                        </th>
+                        <th colspan="2"></th>
+                        <th colspan="2">Apellido y Nombre / Raz&oacute;n Social: <span style="font-weight: normal;">{{entity.cliente.razonSocial }}</span></th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="">
+                            Condici&oacute;n Frente al IVA: <span style="font-weight: normal;">{{entity.cliente.condicionIva}}</span>
+                        </th>
+                        <th colspan="2"></th>
+                        <th colspan="2">
+                            Domicilio:
+                            <span style="font-weight: normal;">
+                                {{entity.cliente.domiciliocomercial}}
+                            </span>
+                        </th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid;">
+                        <th colspan="3" style="">
+                            Condici&oacute;n de Venta: <span style="font-weight: normal;">Contado</span>
+                        </th>
+                        <th colspan="3" style="">
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </header>
+
+        <table id="content" class="display" cellspacing="0" width="100%" style="border:  1px solid;margin-top: 1%;">
+            <thead>
+                <tr style="border-bottom: 1px solid;">
+                    <th>C&oacute;digo</th>
+                    <th style="width: 25%;">Desc.</th>
+                    <th>Cantidad</th>
+                    <th>Precio U.</th>
+                    <th>Bonif. (%)</th>
+                    <th>Precio Bonif.</th>
+                    <th colspan="2">Sub. Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set length = 0  %}
+                {% for prodFact in entity.productosFactura %}
+                    {% set length = loop.length  %}
+                    <tr style="height: 22px">
+                        <td>
+                            {{ prodFact.producto.codigo }}
+                        </td>
+                        <td>
+                            {{ prodFact.producto.descripcion }}
+                        </td>
+                        <td>
+                            {{ prodFact.cantidad }}
+                        </td>
+                        <td>
+                            {{ prodFact.precio }}
+                        </td>
+                        <td>
+                            {{ prodFact.descuento }}
+                        </td>
+                        <td>
+                            {{ (prodFact.precio)*(1 - (prodFact.descuento/100)) }}
+                        </td>
+                        <td colspan="2">
+                            {{ ((prodFact.precio) * prodFact.cantidad * (1 - (prodFact.descuento/100)))|number_format(2) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                {% if length < 17 %}
+                    {% set numero = 17 - length %}
+                    {% for i in 0..numero %}
+                        <tr style="height: 22px">
+                            <td colspan="8">
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+        <footer>
+            <table id="content" class="display" cellspacing="0" width="100%" style="border:  1px solid;margin-top: 1%;">
+                <tfoot>
+                    <tr style="border-bottom: 1px solid;">
+                        <th colspan="2">
+                        </th>
+                        <th style="text-align: right;">
+                            Total:
+                        </th>
+                        <th style="border-right: 1px solid;">
+                            $ {{ entity.importe|number_format(2) }}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                        </th>
+                        <th style="text-align: right;">
+                            CAE N&#186;:
+                        </th>
+                        <th>
+                            {{entity.cae}}
+                        </th>
+                    </tr>
+                    {% if entity.cae != 'NO VALIDO COMO FACTURA' %}
+                        <tr style="border-bottom: 1px solid;">
+                            <th colspan="2">
+    							<img src="{{ asset('barcode/html/image.php?filetype=PNG&dpi=72&scale=1&rotation=0&font_family=Arial.ttf&font_size=8&text=' ~ codigobarras ~ '&thickness=20&checksum=&code=BCGcode128')}}" />
+    						</th>
+                            <th style="text-align: right;">
+                                Fecha Vencimiento CAE:
+                            </th>
+                            <th>
+                                 {{entity.fechavtocae|date('d/m/Y')}}
+                            </th>
+                        </tr>
+                    {% endif %}
+                    {% if entity.cae == '' %}
+                    <tr style="border-bottom: 1px solid;">
+                        <th colspan="5">
+                            {{entity.observacion}}
+                        </th>
+                    </tr>
+                    {% endif %}
+                </tfoot>
+            </table>
+        </footer>
+    </div>
+    <div id="oculto" style="text-align: center; margin-top: 1%; margin-bottom: 1%;">
+        <a class="btn btn-default" href="javascript:imprSelec()">
+            Imprimir
+        </a>
+        <a class="btn btn-default" id="print">
+            Capturar
+        </a>
+        <a class="btn btn-default" href="{{ path('notacredito') }}">
+            Volver
+        </a>
+    </div>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="{{asset('bundles/html2canvas.js')}}"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.dataTables.min.css">
+
+    <script language="Javascript">
+        function imprSelec() {
+            $('#oculto').css('display', 'none');
+            window.print();
+            $('#oculto').css('display', 'block');
+        }
+
+        $(document).ready(function () {
+            var imgDir = "{{asset('bundles/web/images/')}}";
+            if (logo!=''){
+                $('#logo').append('<img width="200px" src="'+imgDir+logo +'"/>');
+            } else {
+                $('#logo').append('<H2>'+decripcionLogo+'</H2>');
+            }
+            $('#domicilioComercial').html(direccionComercial);
+            $('#razonSocial').html(razonSocial);
+            $('#cuit').html(cuit);
+            $('#condicionIVA').html(condicionIVA);
+            $('#ingresosBrutos').html(ingresosBrutos);
+            $('#fechaInicioActividades').html(fechaInicioActividades);
+
+            $("#print").click(function (e) {
+                e.preventDefault();
+                html2canvas($("#imprimir"), {
+                    background: '#fff',
+                    onrendered: function (canvas) {
+                        var myImage = canvas.toDataURL("image/png");
+                        $('#oculto').css('display', 'none');
+                        window.open(myImage);
+                        window.document.close(); // necessary for IE >= 10
+                        window.focus(); // necessary for IE >= 10
+                        $('#oculto').css('display', 'block');
+                    }
+                });
+            });
+        });
+
+
+    </script>
+    <style>
+        @media print {
+            @page { margin: 0; }
+            body { margin: 1.6cm; }
+        }
+
+        #page-wrapper {
+            padding: 0px;
+        }
+
+    </style>
+{% endblock %}

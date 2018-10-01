@@ -1,0 +1,111 @@
+factura:
+    pattern:  /factura/{page}
+    defaults: { _controller: "JOYASJoyasBundle:Factura:index", page:1 }
+
+factura_irinformeimpuestos:
+    pattern:  /irinformeimpuestos
+    defaults: { _controller: "JOYASJoyasBundle:Factura:irinformeimpuestos" }
+
+factura_informeimpuestos:
+    pattern:  /informeimpuestos
+    defaults: { _controller: "JOYASJoyasBundle:Factura:informeimpuestos" }
+
+notacredito:
+    pattern:  /notacredito/{page}
+    defaults: { _controller: "JOYASJoyasBundle:Factura:notacredito", page:1 }
+
+factura_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "JOYASJoyasBundle:Factura:show" }
+
+factura_filtro:
+    pattern:  /filtro/{page}
+    defaults: { _controller: "JOYASJoyasBundle:Factura:filtro", page: 1 }
+
+factura_remitofactura:
+    pattern:  /{id}/remitofactura
+    defaults: { _controller: "JOYASJoyasBundle:Factura:remitofactura" }
+
+factura_crearremitofactura:
+    pattern:  /crearremitofactura
+    defaults: { _controller: "JOYASJoyasBundle:Factura:crearremitofactura" }
+
+factura_vercliente:
+    pattern:  /vercliente
+    defaults: { _controller: "JOYASJoyasBundle:Factura:vercliente" }
+
+factura_altacliente:
+    pattern:  /altacliente
+    defaults: { _controller: "JOYASJoyasBundle:Factura:altacliente" }
+
+factura_borraremito:
+    pattern:  /{id}/borraremito
+    defaults: { _controller: "JOYASJoyasBundle:Factura:borraremito" }
+
+factura_facturaremito:
+    pattern:  /{id}/facturaremito
+    defaults: { _controller: "JOYASJoyasBundle:Factura:facturaremito" }
+
+factura_crearfacturaremito:
+    pattern:  /crearfacturaremito
+    defaults: { _controller: "JOYASJoyasBundle:Factura:crearfacturaremito" }
+
+factura_imprimir:
+    pattern:  /{id}/imprimir
+    defaults: { _controller: "JOYASJoyasBundle:Factura:imprimir" }
+
+factura_new:
+    pattern:  /new
+    defaults: { _controller: "JOYASJoyasBundle:Factura:new" }
+
+factura_newcredito:
+    pattern:  /newcredito
+    defaults: { _controller: "JOYASJoyasBundle:Factura:newcredito" }
+
+factura_create:
+    pattern:  /create
+    defaults: { _controller: "JOYASJoyasBundle:Factura:create" }
+    requirements: { _method: post }
+
+factura_refacturar:
+    pattern:  /refacturar/{id}
+    defaults: { _controller: "JOYASJoyasBundle:Factura:refacturar" }
+
+factura_createcredito:
+    pattern:  /createcredito
+    defaults: { _controller: "JOYASJoyasBundle:Factura:createcredito" }
+    requirements: { _method: post }
+
+factura_refacturarnota:
+    pattern:  /refacturarnota/{id}
+    defaults: { _controller: "JOYASJoyasBundle:Factura:refacturarnota" }
+
+factura_parcial:
+    pattern:  /parcial
+    defaults: { _controller: "JOYASJoyasBundle:Factura:parcial" }
+    requirements: { _method: post }
+
+factura_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "JOYASJoyasBundle:Factura:edit" }
+
+factura_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "JOYASJoyasBundle:Factura:update" }
+    requirements: { _method: post|put }
+
+factura_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "JOYASJoyasBundle:Factura:delete" }
+    requirements: { _method: post|delete }
+
+factura_filtro:
+    pattern:  /filtroInforme
+    defaults: { _controller: "JOYASJoyasBundle:Factura:filtroInforme" }  
+    
+factura_informe:
+    pattern:  /ventasInforme
+    defaults: { _controller: "JOYASJoyasBundle:Factura:informeVentas" }
+    requirements: { _method: post }
+
+    

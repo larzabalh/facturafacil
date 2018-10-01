@@ -1,0 +1,51 @@
+{% extends 'JOYASJoyasBundle::base.html.twig' %}
+{% block content -%}
+
+<h1>Carga Masiva</h1>
+
+<div class="controls filtrocuerpo" style="width: 40%;">
+	<form class="formModal" enctype="multipart/form-data" action="{{ path('joyas_joyas_importarArchivos') }}" method="post">
+		<div style="margin-top: 25px;">
+			<div style="text-align: center; margin-top: 10px;">
+				<strong>Seleccione archivo</strong>	
+				<input id="archivo" type="file" style="margin: 0 auto;" name="archivo">
+				<input id="desde" type="hidden" value="1" name="desde">
+			</div>
+			{% if perfil == 'ADMINISTRADOR' %}							
+			<div style="margin-top: 10px;">
+				<select name="unidadnegocio" style="margin: 0 auto;">
+					{% for unidad in unidades %}
+						<option value="{{ unidad.id }}">{{ unidad.descripcion }}</option>
+					{% endfor %}
+			   </select>
+			</div>
+			{% endif %}			
+		</div>
+		<br>
+		<input type="submit" class="btn btn-default" style="margin-top:-20px;" value="Cargar" onclick="ocultar(this.id)" />
+	</form>
+</div>
+<div css="row-fluid">
+	<strong>Consideraciones:</strong>	
+	<p>
+		- El archivo debe ser un archivo excel con extensi&oacute;n .xlsx<br>
+		- Las celdas no pueden tener valores calculados. Ej: C2*C3. Hay que reemplazarlo por el valor.<br>
+		- Verificar que los nombres de las listas de precios son exactas con las ya existentes para evitar duplicidad.<br>
+		{% if perfil == 'ADMINISTRADOR'%}Verificar haber elegido la unidad de negocio deseada.<br>{% endif %}
+		- No dejar filas libres ya que esto es una se&ntilde;al para cortar con la carga masiva.<br>
+		- La celda <strong>a1</strong> se utiliza para el t&iacute;tulo "Categor&iacute;a - Subcategor&iacute;a". Debe ponerse el ID de la misma, obtenido desde la secci&oacute;n <strong>Categor&iacute;a - Subcategor&iacute;a</strong><br>
+		- La celda <strong>b1</strong> se utiliza para el t&iacute;tulo "C&oacute;digo".<br>
+		- La ceda <strong>c1</strong> se utiliza para el t&iacute;tulo "Cantidad".<br>
+		- La ceda <strong>d1</strong> se utiliza para el t&iacute;tulo "Costo".<br>
+		- La ceda <strong>e1</strong> se utiliza para el t&iacute;tulo "Descripcion".<br>
+		- La ceda <strong>f1</strong> se utiliza para el t&iacute;tulo "Moneda" (Valores posibles 'us' o 'arg' por dolar o peso	).<br>
+		- A partir de la fila <strong>g1</strong> se utiliza para los t&iacute;tulos de las diferentes listas de precios.
+		Si el nombre de la lista de precios existe no se crea, si no existe se crea una lista nueva. 
+		En cuanto a los productos, si existe se actualizan los valores con los que contiene este archivo. 
+		Si no existe se crea y se le cargan los valores que tiene este archivo.
+	</p>	
+</div>
+<script>
+	activarActionsTab('cargamasiva');
+</script>
+{% endblock %}

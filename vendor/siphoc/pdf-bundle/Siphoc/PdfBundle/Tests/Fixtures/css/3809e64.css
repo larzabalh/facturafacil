@@ -1,0 +1,8 @@
+body {
+    color: #fff;
+    background-image: url(/bundles/foo.png);
+}
+
+h1 {
+    font-size: 25px;
+}

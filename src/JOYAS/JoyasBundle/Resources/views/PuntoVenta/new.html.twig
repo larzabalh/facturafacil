@@ -1,0 +1,13 @@
+{% extends 'JOYASJoyasBundle::base.html.twig' %}
+
+{% block content -%}
+    <h1>
+        Alta de Punto Venta
+        <a class="btn btn-primary" href="{{ path('puntoventa') }}">
+            Volver
+        </a>
+    </h1>
+    <div class="tablasScroll col-md-6 col-md-offset-2">
+        {{ form(form) }}
+    </div>
+{% endblock %}

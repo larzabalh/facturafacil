@@ -1,0 +1,54 @@
+joyas_joyas_usuario:
+    resource: "@JOYASJoyasBundle/Resources/config/routing/usuario.yml"
+    prefix:   /usuario
+
+joyas_joyas_producto:
+    resource: "@JOYASJoyasBundle/Resources/config/routing/producto.yml"
+    prefix:   /producto
+
+joyas_joyas_productofactura:
+    resource: "@JOYASJoyasBundle/Resources/config/routing/productofactura.yml"
+    prefix:   /productofactura
+
+joyas_joyas_factura:
+    resource: "@JOYASJoyasBundle/Resources/config/routing/factura.yml"
+    prefix:   /factura
+
+joyas_joyas_cliente:
+    resource: "@JOYASJoyasBundle/Resources/config/routing/cliente.yml"
+    prefix:   /cliente
+
+joyas_joyas_puntoventa:
+    resource: "@JOYASJoyasBundle/Resources/config/routing/puntoventa.yml"
+    prefix:   /puntoventa
+
+joyas_joyas_homepage:
+    path:     /
+    defaults: { _controller: JOYASJoyasBundle:Default:index }
+
+joyas_joyas_inicio:
+    path:     /inicio
+    defaults: { _controller: JOYASJoyasBundle:Default:inicio }
+
+joyas_joyas_login:
+    path:     /login
+    defaults: { _controller: JOYASJoyasBundle:Default:login }
+
+joyas_joyas_cerrarSession:
+    path:     /cerrarSession
+    defaults: { _controller: JOYASJoyasBundle:Default:cerrar }
+
+joyas_joyas_olvideClave:
+    path:     /olvideClave
+    defaults: { _controller: JOYASJoyasBundle:Default:olvideClave }
+
+joyas_joyas_restClave:
+    path:     /restClave
+    defaults: { _controller: JOYASJoyasBundle:Default:restClave }
+
+joyas_joyas_generar:
+    path:     /generar
+    defaults: { _controller: JOYASJoyasBundle:Default:generar }
+JOYASJoyasBundle_condicioniva:
+    resource: "@JOYASJoyasBundle/Resources/config/routing/condicioniva.yml"
+    prefix:   /condicioniva

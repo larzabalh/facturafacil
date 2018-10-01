@@ -1,0 +1,128 @@
+{% extends 'JOYASJoyasBundle::base.html.twig' %}
+{% block content -%}
+<h1>Edici&oacute;n de Producto '{{ entity.descripcion }}'</h1>
+
+<div class="joyas-container col-md-12">
+	<div class="container">
+	<form enctype="multipart/form-data" action="{{ path('producto_update', {id: entity.id}) }}" method="post">
+		<div class="col-md-12" style="margin-bottom:5px;">
+			{{ form_widget(edit_form.submit) }}
+			<a class="btn middle-second"  href="{{ path('producto') }}">
+				Volver
+			</a>
+		</div>
+		<div class="panel-body">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#home" data-toggle="tab" aria-expanded="true">Datos Generales</a>
+				</li>
+				<li class=""><a href="#fotos" data-toggle="tab" aria-expanded="false">Im&aacute;genes</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade active in" id="home">
+					<div class="col-md-12 bordes">
+						<div class="col-md-12">
+							{{ form_errors(edit_form) }}
+						</div>
+						<div class="col-md-6">
+							<strong>C&oacute;digo</strong><br>
+							{{ form_widget(edit_form.codigo) }}
+							{{ form_errors(edit_form.codigo) }}
+						</div>
+						<div class="col-md-6">
+							<strong>Categor&iacute;a</strong><br>
+							{{ form_widget(edit_form.categoriasubcategoria) }}
+							{{ form_errors(edit_form.categoriasubcategoria) }}
+						</div>
+						<div class="col-md-6">
+							<strong>Descripci&oacute;n</strong><br>
+							{{ form_widget(edit_form.descripcion) }}
+							{{ form_errors(edit_form.descripcion) }}
+						</div>
+						<div class="col-md-6">
+							<strong>Stock<br></strong>
+							{{ form_widget(edit_form.stock) }}
+							{{ form_errors(edit_form.stock) }}
+						</div>
+						<div class="col-md-6">
+							<strong>Moneda<br></strong>
+							{{ form_widget(edit_form.moneda) }}
+							{{ form_errors(edit_form.moneda) }}
+						</div>
+						<div class="col-md-6">
+							<strong>Costo<br></strong>
+							{{ form_widget(edit_form.costo) }}
+							{{ form_errors(edit_form.costo) }}
+						</div>
+						<div class="col-md-3">
+							<strong>Es una novedad?</strong><br>
+							{{ form_widget(edit_form.novedad) }}
+							{{ form_errors(edit_form.novedad) }}
+						</div>
+						<div class="col-md-3">
+							<strong>Es visible en la web?</strong><br>
+							{{ form_widget(edit_form.visible) }}
+							{{ form_errors(edit_form.visible) }}
+						</div>
+						<div class="col-md-6">
+							<strong>Descuento</strong><br>
+							{{ form_widget(edit_form.descuento) }}
+							{{ form_errors(edit_form.descuento) }}
+						</div>
+						<div class="col-md-12">
+							<strong>Descripci&oacute;n ampliada</strong><br>
+							{{ form_widget(edit_form.descripcionampliada) }}
+							{{ form_errors(edit_form.descripcionampliada) }}
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="fotos">
+					<div class="col-md-12 bordes">
+						<div class="col-sm-6">
+							Seleccione archivo <input id="archivo1" type="file" name="archivo1">
+						</div>	
+						<div class="col-sm-6">
+							Seleccione archivo <input id="archivo2" type="file" name="archivo2">
+						</div>	
+						<div class="col-sm-6">
+							Seleccione archivo <input id="archivo3" type="file" name="archivo3">
+						</div>	
+						<div class="col-sm-6">
+							Seleccione archivo <input id="archivo4" type="file" name="archivo4">
+						</div>	
+						<div class="col-sm-6">
+							Seleccione archivo <input id="archivo5" type="file" name="archivo5">
+						</div>	
+						{% if entity.imagenesproducto|length > 0 %}
+						<div class="container" style="text-align:center;">
+							<div class="col-sm-12" style="font-size: 18px;font-weight: bold;">
+								Desea eliminar alguna imagen?
+							</div>
+							<input id="id" name="id" type="hidden" value="{{ entity.id }}">
+							{% for imagen in entity.imagenesproducto %}
+							<div class="col-sm-12">
+								<input style="width: 25px; display: initial;margin-right: 12px;" type="checkbox" name="checks[]" value="{{imagen.id}}">
+								<img width="100px" src="{{ asset(imagen.webPath) }}" />
+							</div>		
+							{% endfor %}
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="display:none;">
+			{{ form_rest(edit_form) }}
+		</div>
+		</form>	
+	</div>
+</div>
+
+<script>
+	$( document ).ready(function() {
+		$("#joyas_joyasbundle_producto_visible").removeAttr('required');	
+		$("#joyas_joyasbundle_producto_novedad").removeAttr('required');	
+	});
+</script> 
+{% endblock %}

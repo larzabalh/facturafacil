@@ -1,0 +1,40 @@
+{% extends 'JOYASJoyasBundle::base.html.twig' %}
+{% block content -%}
+
+<div class="filtrocabecera">
+	Informe CITI Ventas
+</div>
+<div class="controls filtrocuerpo">
+	<form action="{{ path('factura_informeimpuestos') }}" method="POST" style="margin-top: 20px;" autocomplete="off">
+		<div class="control-group" style="text-align: center">
+			<div class="controls">
+				Per&iacute;odo: 
+				<input onblur="comprobar();" required type="text" class="form-control" style="width: 150px !important; margin: 0 auto;" id="fechaDesde" name="fechaDesde" placeholder="fecha desde" onkeydown="return false">
+				<input onblur="comprobar();" required type="text" class="form-control" style="width: 150px !important; margin: 0 auto;"  id="fechaHasta" name="fechaHasta" placeholder="fecha hasta" onkeydown="return false">
+				<br />
+            </div>
+			<br />
+			<button class="btn btn-default" type="submit">Ingresar</button>
+		</div>
+	</form>
+</div>
+<script>
+
+function comprobar(){
+	var desde = $('#fechaDesde').val();
+	var hasta = $('#fechaHasta').val();
+	
+	var aFecha1 = desde.split('-'); 
+	var aFecha2 = hasta.split('-'); 
+	var fFecha1 = Date.UTC(aFecha1[2],aFecha1[1]-1,aFecha1[0]); 
+	var fFecha2 = Date.UTC(aFecha2[2],aFecha2[1]-1,aFecha2[0]); 
+	var dif = fFecha2 - fFecha1;
+	var dias = Math.floor(dif / (1000 * 60 * 60 * 24)); 
+    if(dias>365){
+		$('#fechaHasta').val("");
+		alert('El periodo entre fechas debe ser menor a 365 dias.');
+	}
+}
+
+</script>
+{% endblock %}

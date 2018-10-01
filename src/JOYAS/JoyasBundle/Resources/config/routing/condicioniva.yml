@@ -1,0 +1,30 @@
+condicioniva:
+    path:     /
+    defaults: { _controller: "JOYASJoyasBundle:CondicionIva:index" }
+
+condicioniva_show:
+    path:     /{id}/show
+    defaults: { _controller: "JOYASJoyasBundle:CondicionIva:show" }
+
+condicioniva_new:
+    path:     /new
+    defaults: { _controller: "JOYASJoyasBundle:CondicionIva:new" }
+
+condicioniva_create:
+    path:     /create
+    defaults: { _controller: "JOYASJoyasBundle:CondicionIva:create" }
+    requirements: { _method: post }
+
+condicioniva_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "JOYASJoyasBundle:CondicionIva:edit" }
+
+condicioniva_update:
+    path:     /{id}/update
+    defaults: { _controller: "JOYASJoyasBundle:CondicionIva:update" }
+    requirements: { _method: post|put }
+
+condicioniva_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "JOYASJoyasBundle:CondicionIva:delete" }
+    requirements: { _method: post|delete }

@@ -1,0 +1,22 @@
+{% extends 'JOYASJoyasBundle::base.html.twig' %}
+
+{% block content -%}
+<h1>Nuevo usuario</h1>
+<div class="joyas-container" style="width: 50%; margin: 0 auto;">
+	<div class="container">
+		{{ form_start(form) }}
+			{{ form_errors(form) }}
+			{{ form(form) }}
+			<a class="btn middle-second"  href="{{ path('usuario') }}">
+				Volver
+			</a>
+		{{ form_end(form) }}
+	</div>
+</div>
+
+<script>
+	$(document).ready(function (){
+		$("#joyas_joyasbundle_usuario_logo").removeAttr('required');
+	});
+</script>
+{% endblock %}

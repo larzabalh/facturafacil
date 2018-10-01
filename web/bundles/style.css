@@ -1,0 +1,392 @@
+h1 > a {
+    float: right;
+}
+/* start preloader */
+.preloader
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: row nowrap;
+    -ms-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background: none repeat scroll 0 0 #fff;
+}
+.sk-spinner-rotating-plane.sk-spinner
+{
+    width: 30px;
+    height: 30px;
+    background-color: grey;
+    -webkit-animation: sk-rotatePlane 1.2s infinite ease-in-out;
+    animation: sk-rotatePlane 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-rotatePlane {
+    0% {
+        -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+        transform: perspective(120px) rotateX(0deg) rotateY(0deg); }
+
+    50% {
+        -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+        transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg); }
+
+    100% {
+        -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg); }
+}
+
+@keyframes sk-rotatePlane {
+    0% {
+        -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+        transform: perspective(120px) rotateX(0deg) rotateY(0deg); }
+
+    50% {
+        -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+        transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg); }
+
+    100% {
+        -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg); }
+}
+/* end preloader */
+.container-fluid {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+h1
+{
+    font-size: 24px;
+}
+.display
+{
+    text-align:center;
+}
+th{
+    text-align:center;
+}
+#cotizacion
+{
+    -webkit-box-shadow: 1px 0px 28px -6px rgba(235,232,235,1);
+    -moz-box-shadow: 1px 0px 28px -6px rgba(235,232,235,1);
+    box-shadow: 1px 0px 28px -6px rgba(235,232,235,1);
+    background: -moz-linear-gradient(center top , #fff, #fdfdfd) repeat scroll 0 0 #fdfdfd;
+    border: 1px solid #d5d5d5;
+    padding: 5px;
+    display: block;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+@media (min-width: 1200px){
+    .container {
+        width: 100%;
+    }
+}
+@media (min-width: 768px){
+    .container {
+        width: 100%;
+    }
+}
+.form input
+{
+    width: 125px;
+    margin-right: 20px;
+}
+
+.form select
+{
+    margin-right: 20px;
+}
+
+body
+{
+    list-style: none;
+}
+
+ul
+{
+    list-style: none;
+}
+
+.modalDialog {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    opacity:0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+}
+.modalDialog:target {
+    opacity:1;
+    pointer-events: auto;
+}
+
+.modalDialog > div {
+    width: 600px;
+    height: 218px;
+    position: relative;
+    margin: 10% auto;
+    padding: 5px 20px 13px 20px;
+    border-radius: 10px;
+    background: #fff;
+    background: -moz-linear-gradient(#fff, #999);
+    background: -webkit-linear-gradient(#fff, #999);
+    background: -o-linear-gradient(#fff, #999);
+}
+
+.formModal
+{
+    font-size: 16px;
+}
+
+.filtrocabecera
+{
+    text-align: center;
+    width: 40%;
+    margin: 0 auto;
+    line-height: 25px;
+    -webkit-box-shadow: 1px 0px 28px -6px rgba(235,232,235,1);
+    -moz-box-shadow: 1px 0px 28px -6px rgba(235,232,235,1);
+    box-shadow: 1px 0px 28px -6px rgba(235,232,235,1);
+    background: -moz-linear-gradient(center top , #fff, #fdfdfd) repeat scroll 0 0 #fdfdfd;
+    border: 1px solid #d5d5d5;
+    display: block;
+    border-radius: 4px;
+}
+
+.filtro
+{
+    margin: 0px 0px 15px 0px;
+}
+.filtrocuerpo
+{
+    text-align: center;
+    width: 40%;
+    margin: 0 auto;
+    line-height: 25px;
+    -webkit-box-shadow: 1px 0px 28px -6px rgba(235,232,235,1);
+    -moz-box-shadow: 1px 0px 28px -6px rgba(235,232,235,1);
+    box-shadow: 1px 0px 28px -6px rgba(235,232,235,1);
+    background: -moz-linear-gradient(center top , #fff, #fdfdfd) repeat scroll 0 0 #fdfdfd;
+    border: 1px solid #d5d5d5;
+    padding: 35px;
+    display: block;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+    padding: 8px 0px 8px 0px !important;
+}
+
+.facturaVenta
+{
+    float: left;
+    width: 48%;
+    height: 70px;
+}
+
+.botones
+{
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+
+.saldo
+{
+    margin-top: 11px;
+    float: left;
+    width: 40%;
+    text-align: center;
+}
+
+.facturaVenta input, .facturaVenta select
+{
+    width: 80% !important;
+}
+
+.oculto{
+    display: none;
+}
+
+.table th, .table td {
+    text-align: center;
+}
+#page-wrapper{
+    padding: 0 15px;
+}
+.tablasScroll
+{
+    -webkit-box-shadow: 1px 0px 28px -6px rgba(235,232,235,1);
+    -moz-box-shadow: 1px 0px 28px -6px rgba(235,232,235,1);
+    box-shadow: 1px 0px 28px -6px rgba(235,232,235,1);
+    background: -moz-linear-gradient(center top , #fff, #fdfdfd) repeat scroll 0 0 #fdfdfd;
+    border: 1px solid #d5d5d5;
+    padding: 1%;
+    display: block;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    overflow: auto;
+}
+.inicioForm {
+    position: relative;
+    width: 46%;
+    top: 25px;
+    margin: 10px auto;
+    display:block;
+}
+
+.mensajeInicio {
+    position: relative;
+    width: 52%;
+    font-size: 25px;
+    margin: 0 auto;
+    top: 34px;
+}
+
+
+.filaPref
+{
+    margin-bottom: 10px;
+}
+
+
+#chomp_sgibundle_incidente_fechaLimiteSLA
+{
+    width: 140px;
+}
+
+#chomp_sgibundle_incidente_fechaCierreAutomatico
+{
+    width: 140px;
+}
+
+#chomp_sgibundle_incidente_fechaCierre
+{
+    width: 140px;
+}
+
+#chomp_sgibundle_incidente_comentarios_0_fechaCreacion
+{
+    width: 140px;
+}
+
+
+.form_preferencias
+{
+    border: 1px solid #ddd;
+    width: 40%;
+    margin: 0 auto;
+    padding: 20px;
+}
+.joyas-container{
+    -webkit-box-shadow: 1px 0px 28px -6px rgba(235,232,235,1);
+    -moz-box-shadow: 1px 0px 28px -6px rgba(235,232,235,1);
+    box-shadow: 1px 0px 28px -6px rgba(235,232,235,1);
+    background: -moz-linear-gradient(center top , #fff, #fdfdfd) repeat scroll 0 0 #fdfdfd;
+    border: 1px solid #d5d5d5;
+    padding: 35px;
+    display:block;
+    border-radius: 4px;
+}
+
+
+.joyas-container .contenedor{
+    padding: 10px 10px 20px;
+    border: 1px solid #f4f4f4;
+    border-radius: 5px;
+}
+
+
+.joyas-container .contenedor+.contenedor{
+    margin-top: 30px;
+}
+
+.joyas-container .contenedor .title{
+    margin: -12px 0 0 10px; background-color: #fff; max-width: 50%; display:block; float:left; padding: 0 3px
+}
+
+.joyas-container .contenedor ul>li{
+    line-height: 30px;
+}
+
+.joyas-container .container.output .form_row2>label{
+
+    padding-top: 2px !important;
+}
+
+.incidente-row{
+
+}
+.incidente-row.green{
+    background-color: #87C387;
+}
+
+.incidente-row.red{
+    background-color: #D46F6F;
+}
+
+.incidente-row.yellow{
+    background-color: #FFFFC4;
+}
+
+.incidente-row.blue{
+    background-color: #A7BCE8;
+}
+.msgbox
+{
+    width: 50%;
+    margin: 0 auto;
+}
+.alert .close {
+    position: relative;
+    top: -2px;
+    right: -21px;
+    line-height: 20px;
+}
+.alert {
+    padding: 8px 35px 8px 14px;
+    margin-bottom: 20px;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    background-color: #fcf8e3;
+    border: 1px solid #fbeed5;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.alert-error {
+    color: #b94a48;
+    background-color: #f2dede;
+    border-color: #eed3d7;
+}
+
+.alert-success {
+    color: green;
+    background-color: rgba(214, 255, 193, 0.54);
+    border-color: #93CA77;
+}
+.span4
+{
+    width: 70%;
+    margin: 0 auto;
+}

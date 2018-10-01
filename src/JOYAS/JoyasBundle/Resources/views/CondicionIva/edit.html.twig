@@ -1,0 +1,16 @@
+{% extends 'JOYASJoyasBundle::base.html.twig' %}
+
+{% block content -%}
+    <h1>Edici&oacute;n de Condici&oacute;n de IVA</h1>
+
+    <div class="joyas-container" style="width: 50%; margin: 0 auto;"><div class="container">
+    {{ form(edit_form) }}<a class="btn btn-default" href="{{ path('condicioniva')  }}">
+    Volver</a></div></div>
+	
+<script>
+	$(document).ready(function (){
+		$("input").attr('class','form-control');
+	});	
+	activarActionsTab('condicioniva');
+</script>
+{% endblock %}

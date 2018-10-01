@@ -1,0 +1,45 @@
+usuario:
+    path:     /
+    defaults: { _controller: "JOYASJoyasBundle:Usuario:index" }
+
+usuario_web:
+    path:     /usuarioweb
+    defaults: { _controller: "JOYASJoyasBundle:Usuario:usuarioweb" }
+
+usuario_desaprobarusuario:
+    path:     /{id}/desaprobarusuario
+    defaults: { _controller: JOYASJoyasBundle:Usuario:desaprobarusuario }
+
+usuario_aprobarusuario:
+    path:     /{id}/aprobarusuario
+    defaults: { _controller: JOYASJoyasBundle:Usuario:aprobarusuario }
+
+usuario_show:
+    path:     /{id}/show
+    defaults: { _controller: "JOYASJoyasBundle:Usuario:show" }
+
+usuario_new:
+    path:     /new
+    defaults: { _controller: "JOYASJoyasBundle:Usuario:new" }
+
+usuario_create:
+    path:     /create
+    defaults: { _controller: "JOYASJoyasBundle:Usuario:create" }
+    requirements: { _method: post }
+
+usuario_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "JOYASJoyasBundle:Usuario:edit" }
+
+usuario_update:
+    path:     /{id}/update
+    defaults: { _controller: "JOYASJoyasBundle:Usuario:update" }
+    requirements: { _method: post|put }
+
+usuario_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "JOYASJoyasBundle:Usuario:delete" }
+
+usuario_activar:
+    path:     /{id}/activar
+    defaults: { _controller: "JOYASJoyasBundle:Usuario:activar" }

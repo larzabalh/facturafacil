@@ -1,0 +1,30 @@
+productofactura:
+    pattern:  /
+    defaults: { _controller: "JOYASJoyasBundle:ProductoFactura:index" }
+
+productofactura_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "JOYASJoyasBundle:ProductoFactura:show" }
+
+productofactura_new:
+    pattern:  /new
+    defaults: { _controller: "JOYASJoyasBundle:ProductoFactura:new" }
+
+productofactura_create:
+    pattern:  /create
+    defaults: { _controller: "JOYASJoyasBundle:ProductoFactura:create" }
+    requirements: { _method: post }
+
+productofactura_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "JOYASJoyasBundle:ProductoFactura:edit" }
+
+productofactura_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "JOYASJoyasBundle:ProductoFactura:update" }
+    requirements: { _method: post|put }
+
+productofactura_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "JOYASJoyasBundle:ProductoFactura:delete" }
+    requirements: { _method: post|delete }

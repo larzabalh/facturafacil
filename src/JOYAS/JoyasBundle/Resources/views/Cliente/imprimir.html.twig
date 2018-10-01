@@ -1,0 +1,222 @@
+	{% set pesosD = 0 %}
+	{% set pesosH = 0 %}
+	{% set dolaresD = 0 %}
+	{% set dolaresH = 0 %}
+	<div class="tablasScroll" style="border: none;">
+    <table class="table table-bordered table-striped tableCC" >
+        <thead>
+            <tr>
+                <th colspan="2">Cuenta Corriente: "{{entity.razonSocial }}"</th>
+                <th colspan="3" style="text-align:center">Pesos ($)</th>
+                <th colspan="3" style="text-align:center">Dolar (u$s)</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+                <td width="10%">Fecha</td>
+                <td width="20%">Movimiento</td>
+                <td width="12%">Debe</td>
+				<td width="12%">Haber</td>
+				<td width="12%">Saldo</td>
+				<td width="12%">Debe</td>
+				<td width="12%">Haber</td>
+				<td width="12%">Saldo</td>
+            </tr>
+			{% for movimiento in entity.movimientoscc %}
+			{% if movimiento.estado == 'A' and entity.clienteProveedor == '2' %}
+				<tr>
+					<td>{{ movimiento.documento.fechaRegistracion|date('d-m-Y') }}</td>
+					<td>
+					 
+					{% if movimiento.tipoDocumento == 'R' %} 
+					RECIBO CLIENTE {{ movimiento.id }}
+					{% endif %}
+					{% if movimiento.tipoDocumento == 'C' %} 
+					NOTA DE CR&Eacute;DITO {{ movimiento.id }}
+					{% endif %}
+					{% if movimiento.tipoDocumento == 'D' %} 
+					NOTA DE D&Eacute;BITO {{ movimiento.id }}
+					{% endif %}
+					{% if movimiento.tipoDocumento == 'RP' %} 
+					RECIBO PROV. {{ movimiento.id }}
+					{% endif %}
+					{% if movimiento.tipoDocumento == 'F' %} 
+					FACTURA {{ movimiento.id }}
+					{% endif %}
+					</td>
+					{% if movimiento.tipoDocumento == 'RP' or movimiento.tipoDocumento == 'C' %} 
+						{% if movimiento.monedaStr == 'ARG' %} 
+							{% set pesosD = movimiento.documento.importe + pesosD %}
+							<td>$ {{ movimiento.documento.importe }}</td>
+							<td></td>
+							<td>$ {{ pesosD - pesosH }}</td>
+							<td></td>
+							<td></td>
+							<td></td>
+						{% else %}
+							{% set dolaresD = movimiento.documento.importe + dolaresD %}
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>U$S {{ movimiento.documento.importe }}</td>
+							<td></td>
+							<td>U$S {{ dolaresD - dolaresH }}</td>
+						{% endif %}
+					{% endif %}
+					{% if movimiento.tipoDocumento == 'F' or movimiento.tipoDocumento == 'D' %} 
+						{% if movimiento.monedaStr == 'ARG' %} 
+							{% set pesosH = movimiento.documento.importe + pesosH %}
+							<td></td>
+							<td>$ {{ movimiento.documento.importe }}</td>
+							<td>$ {{ pesosD - pesosH }}</td>
+							<td></td>
+							<td></td>
+							<td></td>
+						{% else %}
+							{% set dolaresH = movimiento.documento.importe + dolaresH %}
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>U$S {{ movimiento.documento.importe }}</td>
+							<td>U$S {{ dolaresD - dolaresH }}</td>
+						{% endif %}
+					{% endif %}
+				</tr>
+			{% else %}
+				{% if movimiento.estado == 'A' and entity.clienteProveedor == '1' %}
+					<tr>
+						{% if movimiento.tipoDocumento == 'FC' %} 
+							<td>{{ movimiento.factura.fecha|date('d-m-Y') }}</td>
+						{% else %}
+							<td>{{ movimiento.documento.fechaRegistracion|date('d-m-Y') }}</td>						
+						{% endif %}
+						<td>
+							{% if movimiento.tipoDocumento == 'R' %} 
+							RECIBO CLIENTE {{ movimiento.id }}
+							{% endif %}
+							{% if movimiento.tipoDocumento == 'C' %} 
+							NOTA DE CR&Eacute;DITO {{ movimiento.id }}
+							{% endif %}
+							{% if movimiento.tipoDocumento == 'D' %} 
+							NOTA DE D&Eacute;BITO {{ movimiento.id }}
+							{% endif %}
+							{% if movimiento.tipoDocumento == 'RP' %} 
+							RECIBO PROV. {{ movimiento.id }}
+							{% endif %}
+							{% if movimiento.tipoDocumento == 'F' %} 
+							FACTURA {{ movimiento.id }}
+							{% endif %}
+						{% if movimiento.tipoDocumento == 'FC' %} 
+							FACTURA {{ movimiento.factura.id }}
+						{% endif %}
+						</td>
+						{% if movimiento.tipoDocumento == 'D' or movimiento.tipoDocumento == 'FC'%} 
+							{% if movimiento.monedaStr == 'ARG' %} 
+								{% if movimiento.tipoDocumento == 'D'%} 
+									{% set pesosD = movimiento.documento.importe + pesosD %}
+									<td>$ {{ movimiento.documento.importe }}</td>
+									<td></td>
+									<td>$ {{ pesosD - pesosH }}</td>
+									<td></td>
+									<td></td>
+									<td></td>
+								{% else %}
+									
+									{% set importeFC = 0 %}
+									{% for prodFact in movimiento.factura.productosFactura %}
+										{% set importeFC = (prodFact.precio * prodFact.cantidad) + importeFC %} 
+									{% endfor %}
+	
+									{% if movimiento.factura.descuento != '' %}																	
+										{% set desc = '0.' ~ (100 - movimiento.factura.descuento)  %}																	
+										{% set importeFC = importeFC * desc  %}																	
+									{% endif %}
+
+									{% if movimiento.factura.bonificacion != '' %}																	
+										{% set importeFC = importeFC - movimiento.factura.descuento %}																	
+									{% endif %}
+
+									{% set pesosD = importeFC + pesosD %}
+									
+									<td>$ {{ importeFC }}</td>
+									<td></td>
+									<td>$ {{ pesosD - pesosH }}</td>
+									<td></td>
+									<td></td>
+									<td></td>
+								{% endif %}
+							{% else %}
+								{% if movimiento.tipoDocumento == 'D'%} 
+									{% set dolaresD = movimiento.documento.importe + dolaresD %}
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>U$S {{ movimiento.documento.importe }}</td>
+									<td></td>
+									<td>U$S {{ dolaresD - dolaresH }}</td>
+								{% else %}
+
+									{% set importeFC = 0 %}
+									{% for prodFact in movimiento.factura.productosFactura %}
+										{% set importeFC = (prodFact.precio * prodFact.cantidad) + importeFC %} 
+									{% endfor %}
+	
+									{% if movimiento.factura.descuento != '' %}																	
+										{% set importeFC = '0,' ~ (100 - movimiento.factura.descuento) * importeFC %}																	
+									{% endif %}
+
+									{% if movimiento.factura.bonificacion != '' %}																	
+										{% set importeFC = importeFC - movimiento.factura.descuento %}																	
+									{% endif %}
+
+									{% set dolaresD = importeFC + dolaresD %}
+
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>U$S {{ importeFC }} </td>
+									<td></td>
+									<td>U$S {{ dolaresD - dolaresH }}</td>
+								{% endif %}
+							{% endif %}
+						{% endif %}
+						{% if movimiento.tipoDocumento == 'R' or movimiento.tipoDocumento == 'C' %} 
+							{% if movimiento.monedaStr == 'ARG' %} 
+								{% set pesosH = movimiento.documento.importe + pesosH %}
+								<td></td>
+								<td>$ {{ movimiento.documento.importe }}</td>
+								<td>$ {{ pesosD - pesosH }}</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							{% else %}
+								{% set dolaresH = movimiento.documento.importe + dolaresH %}
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>U$S {{ movimiento.documento.importe }}</td>
+								<td>U$S {{ dolaresD - dolaresH }}</td>
+							{% endif %}
+						{% endif %}
+					</tr>				
+				{% endif %}
+			{% endif %}
+
+			{% endfor %}
+			</tbody>
+		</table>
+</div>
+
+<table style="width: 100%; text-align: center;">
+	<tbody>
+		<tr>
+			<td width="40%" colspan="2">
+
+			</td>
+			<td width="30%" colspan="3">SALDO $ {{ pesosD - pesosH }}</td>
+			<td width="30%" colspan="3">SALDO U$S {{ dolaresD - dolaresH }}</td>
+		</tr>
+	</tbody>
+</table>

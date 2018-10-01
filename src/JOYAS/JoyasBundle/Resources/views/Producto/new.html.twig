@@ -1,0 +1,127 @@
+{% extends 'JOYASJoyasBundle::base.html.twig' %}
+{% block content -%}
+
+<h1>Creaci&oacute;n de Producto</h1>
+
+<div class="joyas-container col-md-12">
+	<div class="container ">
+	<form enctype="multipart/form-data" action="{{ path('producto_create') }}" method="post">
+		<div class="col-md-12" style="margin-bottom:5px;">
+			{{ form_widget(form.submit) }}
+			<a class="btn middle-second"  href="{{ path('producto') }}">
+				Volver
+			</a>
+		</div>
+		<div class="panel-body">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#home" data-toggle="tab" aria-expanded="true">Datos Generales</a>
+				</li>
+				<li class=""><a href="#fotos" data-toggle="tab" aria-expanded="false">Im&aacute;genes</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade active in" id="home">
+					<div class="col-md-12 bordes">
+						<div class="col-md-12">
+							{{ form_errors(form) }}
+						</div>
+						<div class="col-md-6">
+							<strong>C&oacute;digo</strong><br>
+							{{ form_widget(form.codigo) }}
+							{{ form_errors(form.codigo) }}
+						</div>
+						<div class="col-md-6">
+							<strong>Categor&iacute;a</strong><br>
+							{{ form_widget(form.categoriasubcategoria) }}
+							{{ form_errors(form.categoriasubcategoria) }}
+						</div>
+						<div class="col-md-6">
+							<strong>Descripci&oacute;n</strong><br>
+							{{ form_widget(form.descripcion) }}
+							{{ form_errors(form.descripcion) }}
+						</div>
+						<div class="col-md-6">
+							<strong>Stock</strong><br>
+							{{ form_widget(form.stock) }}
+							{{ form_errors(form.stock) }}
+						</div>
+						<div class="col-md-6">
+							<strong>Moneda</strong><br>
+							{{ form_widget(form.moneda) }}
+							{{ form_errors(form.moneda) }}
+						</div>
+						<div class="col-md-6">
+							<strong>Costo</strong><br>
+							{{ form_widget(form.costo) }}
+							{{ form_errors(form.costo) }}
+						</div>
+						<div class="col-md-3">
+							<strong>Es una novedad?</strong><br>
+							{{ form_widget(form.novedad) }}
+							{{ form_errors(form.novedad) }}
+						</div>
+						<div class="col-md-3">
+							<strong>Es visible en la web?</strong><br>
+							{{ form_widget(form.visible) }}
+							{{ form_errors(form.visible) }}
+						</div>
+						<div class="col-md-6">
+							<strong>Descuento</strong><br>
+							{{ form_widget(form.descuento) }}
+							{{ form_errors(form.descuento) }}
+						</div>
+						<div class="col-md-12">
+							<strong>Descripci&oacute;n ampliada</strong><br>
+							{{ form_widget(form.descripcionampliada) }}
+							{{ form_errors(form.descripcionampliada) }}
+						</div>
+						{% if perfil == 'ADMINISTRADOR' %}			
+							<div class="col-md-6">
+								<label>Unidad de Negocio</label>
+								<select name="unidadnegocio" class="form-control">
+									{% for unidad in unidades %}
+										<option value="{{ unidad.id }}">{{ unidad.descripcion }}</option>
+									{% endfor %}
+								</select>
+							</div>
+						{% endif %}	
+					</div>
+				</div>
+				<div class="tab-pane fade" id="fotos">
+					<div class="col-md-12 bordes">
+						<div class="col-sm-6">
+							Seleccione archivo <input id="archivo1" type="file" name="archivo1">
+						</div>	
+						<div class="col-sm-6">
+							Seleccione archivo <input id="archivo2" type="file" name="archivo2">
+						</div>	
+						<div class="col-sm-6">
+							Seleccione archivo <input id="archivo3" type="file" name="archivo3">
+						</div>	
+						<div class="col-sm-6">
+							Seleccione archivo <input id="archivo4" type="file" name="archivo4">
+						</div>	
+						<div class="col-sm-6">
+							Seleccione archivo <input id="archivo5" type="file" name="archivo5">
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="display:none">
+			{{ form_rest(form) }}
+		</div>
+	</form>
+	</div>
+</div>
+
+<script>
+	$( document ).ready(function() {
+		$(".container div").css({'margin-top':'10px'});	
+		$("#joyas_joyasbundle_producto_codigo").removeAttr('required');	
+		$("#joyas_joyasbundle_producto_visible").removeAttr('required');	
+		$("#joyas_joyasbundle_producto_novedad").removeAttr('required');	
+	});
+</script> 
+{% endblock %}

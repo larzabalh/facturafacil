@@ -1,0 +1,54 @@
+{% extends 'JOYASJoyasBundle::base.html.twig' %}
+
+{% block content -%}
+
+    <h1 style="text-align: center;">
+		Cliente "{{ entity.razonSocial }}"
+	</h1>
+    <div  class="col-md-8 col-md-offset-2">
+        <table style="text-align: center; width: 100%;" >
+            <tbody>
+                <tr>
+                    <th>Raz&oacute;n Social</th>
+                    <td>{{ entity.razonSocial }}</td>
+                </tr>
+                <tr>
+                    <th>Direcci&oacute;n</th>
+                    <td>{{ entity.domiciliocomercial }}</td>
+                </tr>
+                <tr>
+                    <th>Tel&eacute;fono</th>
+                    <td>{{ entity.telefono }}</td>
+                </tr>
+                <tr>
+                    <th>CUIT</th>
+                    <td>{{ entity.cuit }}</td>
+                </tr>
+                <tr>
+                    <th>DNI</th>
+                    <td>{{ entity.dni }}</td>
+                </tr>
+                <tr>
+                    <th>Condici&oacute;n IVA</th>
+                    <td>{{ entity.condicioniva }}</td>
+                </tr>
+                <tr>
+                    <th>Mail</th>
+                    <td>{{ entity.mail }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+	<div class="col-md-12" style="text-align: center; margin-top: 2%;">
+    	<a class="btn btn-default" href="{{ path('cliente') }}">
+    	   Volver
+    	</a>
+    </div>
+<style>
+td, th{
+    width: 50%;
+    border: 1px solid;
+}
+</style>
+	
+{% endblock %}

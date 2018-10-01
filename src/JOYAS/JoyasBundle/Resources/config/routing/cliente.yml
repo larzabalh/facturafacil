@@ -1,0 +1,42 @@
+cliente:
+    pattern:  /pagina/{page}
+    defaults: { _controller: "JOYASJoyasBundle:Cliente:index", page:1 }
+
+cliente_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "JOYASJoyasBundle:Cliente:show" }
+
+cliente_cc:
+    pattern:  /{id}/cc
+    defaults: { _controller: "JOYASJoyasBundle:Cliente:cc" }
+
+cliente_imprimir:
+    pattern:  /{id}/imprimir
+    defaults: { _controller: "JOYASJoyasBundle:Cliente:imprimir" }
+
+cliente_new:
+    pattern:  /new
+    defaults: { _controller: "JOYASJoyasBundle:Cliente:new" }
+
+cliente_filtro:
+    pattern:  /filtro
+    defaults: { _controller: "JOYASJoyasBundle:Cliente:filtro" }
+
+cliente_create:
+    pattern:  /create
+    defaults: { _controller: "JOYASJoyasBundle:Cliente:create" }
+    requirements: { _method: post }
+
+cliente_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "JOYASJoyasBundle:Cliente:edit" }
+
+cliente_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "JOYASJoyasBundle:Cliente:update" }
+    requirements: { _method: post|put }
+
+cliente_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "JOYASJoyasBundle:Cliente:delete" }
+    requirements: { _method: post|delete }
