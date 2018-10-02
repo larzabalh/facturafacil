@@ -19,8 +19,8 @@ class WSFEV1{
 
 
 #PRODUCCION
-  const PRIVATEKEY = "/keys/carabajal.key";         # La clave privada
-  const CERT = "/keys/carabajal.crt";        	  # The X.509 certificate in PEM format
+  const PRIVATEKEY = "/keys/carabajalraul.key";         # La clave privada
+  const CERT = "/keys/carabajraul.crt";        	  # The X.509 certificate in PEM format
   const WSDL = "/wsfev1prod.wsdl";                # WSDL PRODUCCION
   const WSFEURL = "https://servicios1.afip.gov.ar/wsfev1/service.asmx"; // PRODUCCION
 
