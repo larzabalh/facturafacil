@@ -599,7 +599,7 @@ class appDevDebugProjectContainer extends Container
         $b = new \Doctrine\DBAL\Configuration();
         $b->setSQLLogger($a);
 
-        return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('driver' => 'pdo_mysql', 'host' => '127.0.0.1', 'port' => NULL, 'dbname' => 'facturafacil', 'user' => 'root', 'password' => NULL, 'charset' => 'UTF8', 'driverOptions' => array()), $b, new \Symfony\Bridge\Doctrine\ContainerAwareEventManager($this), array());
+        return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('driver' => 'pdo_mysql', 'host' => '127.0.0.1', 'port' => NULL, 'dbname' => 'facturafacil', 'user' => 'forge', 'password' => 'mG2ZclQtCvXdEnc4uRlu', 'charset' => 'UTF8', 'driverOptions' => array()), $b, new \Symfony\Bridge\Doctrine\ContainerAwareEventManager($this), array());
     }
 
     /**
@@ -608,11 +608,11 @@ class appDevDebugProjectContainer extends Container
      * This service is shared.
      * This method always returns the same instance of the service.
      *
-     * @return EntityManager5bb384c37b9af_546a8d27f194334ee012bfe64f629947b07e4919\__CG__\Doctrine\ORM\EntityManager A EntityManager5bb384c37b9af_546a8d27f194334ee012bfe64f629947b07e4919\__CG__\Doctrine\ORM\EntityManager instance.
+     * @return EntityManager5bb3bced38bc8_546a8d27f194334ee012bfe64f629947b07e4919\__CG__\Doctrine\ORM\EntityManager A EntityManager5bb3bced38bc8_546a8d27f194334ee012bfe64f629947b07e4919\__CG__\Doctrine\ORM\EntityManager instance.
      */
     protected function getDoctrine_Orm_DefaultEntityManagerService()
     {
-        require_once 'C:/Users/hernanl/facturafacil/app/cache/dev/jms_diextra/doctrine/EntityManager_5bb384c37b9af.php';
+        require_once 'C:/Users/hernanl/facturafacil/app/cache/dev/jms_diextra/doctrine/EntityManager_5bb3bced38bc8.php';
 
         $a = new \Doctrine\Common\Cache\ArrayCache();
         $a->setNamespace('sf2orm_default_411a2929ff1c868b1aff68b988a8d742');
@@ -642,7 +642,7 @@ class appDevDebugProjectContainer extends Container
         $f = call_user_func(array('Doctrine\\ORM\\EntityManager', 'create'), $this->get('doctrine.dbal.default_connection'), $e);
         $this->get('doctrine.orm.default_manager_configurator')->configure($f);
 
-        return $this->services['doctrine.orm.default_entity_manager'] = new \EntityManager5bb384c37b9af_546a8d27f194334ee012bfe64f629947b07e4919\__CG__\Doctrine\ORM\EntityManager($f, $this);
+        return $this->services['doctrine.orm.default_entity_manager'] = new \EntityManager5bb3bced38bc8_546a8d27f194334ee012bfe64f629947b07e4919\__CG__\Doctrine\ORM\EntityManager($f, $this);
     }
 
     /**
@@ -3814,8 +3814,8 @@ class appDevDebugProjectContainer extends Container
             'database_host' => '127.0.0.1',
             'database_port' => NULL,
             'database_name' => 'facturafacil',
-            'database_user' => 'root',
-            'database_password' => NULL,
+            'database_user' => 'forge',
+            'database_password' => 'mG2ZclQtCvXdEnc4uRlu',
             'mailer_transport' => 'smtp',
             'mailer_host' => '127.0.0.1',
             'mailer_user' => NULL,
@@ -4306,8 +4306,8 @@ class appDevDebugProjectContainer extends Container
             'jms_di_extra.cache_warmer.controller_file_blacklist' => array(
 
             ),
-            'jms_di_extra.doctrine_integration.entity_manager.file' => 'C:/Users/hernanl/facturafacil/app/cache/dev/jms_diextra/doctrine/EntityManager_5bb384c37b9af.php',
-            'jms_di_extra.doctrine_integration.entity_manager.class' => 'EntityManager5bb384c37b9af_546a8d27f194334ee012bfe64f629947b07e4919\\__CG__\\Doctrine\\ORM\\EntityManager',
+            'jms_di_extra.doctrine_integration.entity_manager.file' => 'C:/Users/hernanl/facturafacil/app/cache/dev/jms_diextra/doctrine/EntityManager_5bb3bced38bc8.php',
+            'jms_di_extra.doctrine_integration.entity_manager.class' => 'EntityManager5bb3bced38bc8_546a8d27f194334ee012bfe64f629947b07e4919\\__CG__\\Doctrine\\ORM\\EntityManager',
             'jms_aop.cache_dir' => 'C:/Users/hernanl/facturafacil/app/cache/dev/jms_aop',
             'jms_aop.interceptor_loader.class' => 'JMS\\AopBundle\\Aop\\InterceptorLoader',
             'knp_menu.factory.class' => 'Knp\\Menu\\MenuFactory',

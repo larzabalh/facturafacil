@@ -37,8 +37,8 @@
     <parameter key="database_host">127.0.0.1</parameter>
     <parameter key="database_port">null</parameter>
     <parameter key="database_name">facturafacil</parameter>
-    <parameter key="database_user">root</parameter>
-    <parameter key="database_password">null</parameter>
+    <parameter key="database_user">forge</parameter>
+    <parameter key="database_password">mG2ZclQtCvXdEnc4uRlu</parameter>
     <parameter key="mailer_transport">smtp</parameter>
     <parameter key="mailer_host">127.0.0.1</parameter>
     <parameter key="mailer_user">null</parameter>
@@ -503,8 +503,8 @@
     <parameter key="jms_di_extra.disable_grep">false</parameter>
     <parameter key="jms_di_extra.doctrine_integration">true</parameter>
     <parameter key="jms_di_extra.cache_warmer.controller_file_blacklist" type="collection"/>
-    <parameter key="jms_di_extra.doctrine_integration.entity_manager.file">C:/Users/hernanl/facturafacil/app/cache/dev/jms_diextra/doctrine/EntityManager_5bb384c37b9af.php</parameter>
-    <parameter key="jms_di_extra.doctrine_integration.entity_manager.class">EntityManager5bb384c37b9af_546a8d27f194334ee012bfe64f629947b07e4919\__CG__\Doctrine\ORM\EntityManager</parameter>
+    <parameter key="jms_di_extra.doctrine_integration.entity_manager.file">C:/Users/hernanl/facturafacil/app/cache/dev/jms_diextra/doctrine/EntityManager_5bb3bced38bc8.php</parameter>
+    <parameter key="jms_di_extra.doctrine_integration.entity_manager.class">EntityManager5bb3bced38bc8_546a8d27f194334ee012bfe64f629947b07e4919\__CG__\Doctrine\ORM\EntityManager</parameter>
     <parameter key="jms_aop.cache_dir">C:/Users/hernanl/facturafacil/app/cache/dev/jms_aop</parameter>
     <parameter key="jms_aop.interceptor_loader.class">JMS\AopBundle\Aop\InterceptorLoader</parameter>
     <parameter key="knp_menu.factory.class">Knp\Menu\MenuFactory</parameter>
@@ -2252,8 +2252,8 @@
         <argument key="host">127.0.0.1</argument>
         <argument key="port">null</argument>
         <argument key="dbname">facturafacil</argument>
-        <argument key="user">root</argument>
-        <argument key="password">null</argument>
+        <argument key="user">forge</argument>
+        <argument key="password">mG2ZclQtCvXdEnc4uRlu</argument>
         <argument key="charset">UTF8</argument>
         <argument key="driverOptions" type="collection"/>
       </argument>
@@ -2306,8 +2306,8 @@
       <argument type="collection"/>
       <argument type="collection"/>
     </service>
-    <service id="doctrine.orm.default_entity_manager" class="EntityManager5bb384c37b9af_546a8d27f194334ee012bfe64f629947b07e4919\__CG__\Doctrine\ORM\EntityManager">
-      <file>C:/Users/hernanl/facturafacil/app/cache/dev/jms_diextra/doctrine/EntityManager_5bb384c37b9af.php</file>
+    <service id="doctrine.orm.default_entity_manager" class="EntityManager5bb3bced38bc8_546a8d27f194334ee012bfe64f629947b07e4919\__CG__\Doctrine\ORM\EntityManager">
+      <file>C:/Users/hernanl/facturafacil/app/cache/dev/jms_diextra/doctrine/EntityManager_5bb3bced38bc8.php</file>
       <argument type="service">
         <service class="Doctrine\ORM\EntityManager" factory-method="create" public="false">
           <argument type="service" id="doctrine.dbal.default_connection"/>

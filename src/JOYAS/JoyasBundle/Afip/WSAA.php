@@ -19,8 +19,8 @@ class WSAA {
 # PRODUCCION
   const WSDL = "/wsaaprod.wsdl";                      # The WSDL corresponding to WSAA PROD
   const URL = "https://wsaa.afip.gov.ar/ws/services/LoginCms"; // produccion  
-  const CERT = "/keys/carabajal.crt";           # The X.509 certificate in PEM format
-  const PRIVATEKEY = "/keys/carabajal.key";         # La clave privada
+  const CERT = "/keys/carabajraul.crt";           # The X.509 certificate in PEM format
+  const PRIVATEKEY = "/keys/carabajalraul.key";         # La clave privada
 
   /*
    * el path relativo, terminado en /
