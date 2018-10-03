@@ -90,18 +90,6 @@
                         </div>
                         <div class="col-md-4">
                             <label>
-                                Punto de Venta
-                            </label>
-                            <div style="margin-bottom: 10px;">
-                                <select name="puntoventa" class="form-control">
-                                    {% for punto in puntos %}
-                                    <option value="{{punto.id}}">{{punto.descripcion}}</option>
-                                    {% endfor %}
-                               </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <label>
                                 Condici&oacute;n frente al IVA
                             </label>
                             <div style="margin-bottom: 10px;">
@@ -113,8 +101,29 @@
                             <label>
                                 IVA
                             </label>
-                            <br />
-                            21%
+							<div style="margin-bottom: 10px;">
+								21%
+							</div>                           
+                        </div>
+                        <div class="col-md-4">
+                            <label>
+                                Punto de Venta
+                            </label>
+                            <div style="margin-bottom: 10px;">
+                                <select name="puntoventa" class="form-control">
+                                    {% for punto in puntos %}
+                                    <option value="{{punto.id}}">{{punto.descripcion}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label>
+                                Fecha de Emisión
+                            </label>
+                            <div style="margin-bottom: 10px;">
+								<input type="text" name="fecha" readonly class="datetimepicker" value="{{ 'now'|date('Y-m-d') }}" />
+                            </div>
                         </div>
                         <div style="col-md-12">
                             <table class="table table-condensed ado">
@@ -281,9 +290,9 @@
             contador = contador + 1;
             var cond = $('#condicioniva option:selected').text();
             if (cond == 'Responsable Inscripto') {
-                $('.iva').removeAttr('hidden');
+                $('.iva').removeClass('hidden');
             } else {
-                $('.iva').addAttr('hidden');
+                $('.iva').addClass('hidden');
             }
             $('#contador').val(contador);
         }
@@ -338,10 +347,10 @@
                 $('#condicionivafac').val(cond);
                 $('#verfactura').css('display', 'block');
                 if (cond == 'Responsable Inscripto') {
-                    $('.iva').removeAttr('hidden');
+                    $('.iva').removeClass('hidden');
                     $('#tipofactura').val('A');
                 } else {
-                    $('.iva').addAttr('hidden');
+                    $('.iva').addClass('hidden');
                     $('#tipofactura').val('B');
                 }
             } else {

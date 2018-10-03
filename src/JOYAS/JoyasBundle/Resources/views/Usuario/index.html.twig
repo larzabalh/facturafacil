@@ -3,7 +3,7 @@
     <h1 style="margin-bottom:10px;">
         Usuarios
         {% if usuario.perfil == 'ADMINISTRADOR' %}
-        <a style="float: right;" class="btn btn-default" href="{{ path('usuario_new') }}">
+        <a class="btn btn-primary" href="{{ path('usuario_new') }}">
             Crear
         </a>
         {% endif %}

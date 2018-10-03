@@ -41,7 +41,6 @@ class ClienteController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 		$usuarioSession = $this->sessionSvc->getSession('usuario');
-
 		$entities = $em->getRepository('JOYASJoyasBundle:Cliente')->findBy(array('usuario'=>$usuarioSession->getId()));
 
         $adapter = new ArrayAdapter($entities);
@@ -64,8 +63,9 @@ class ClienteController extends Controller
         $em = $this->getDoctrine()->getManager();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
-        $usuario = $this->sessionSvc->getSession('usuario');
+		$usuario = $em->getRepository('JOYASJoyasBundle:Usuario')->find($this->sessionSvc->getSession('usuario')->getId());
 		$entity->setUsuario($usuario);
+
 		if ($form->isValid()){
             $em->persist($entity);
             $em->flush();

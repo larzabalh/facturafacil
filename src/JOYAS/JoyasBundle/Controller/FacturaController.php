@@ -146,7 +146,7 @@ class FacturaController extends Controller {
         $entity->setTipodocumento('F');
         $entity->setTipofactura($tipofactura);
         $entity->setCliente($cliente);
-        $entity->setFecha(new \DateTime());
+        $entity->setFecha(new \DateTime($request->get('fecha')));
         $entity->setImporte($request->get('resultadoFinal'));
         $condicionIva = $em->getRepository('JOYASJoyasBundle:CondicionIva')->findOneBy(array('descripcion' => $request->get('condicionivafac')));
         $cliente->setCondicioniva($condicionIva);
@@ -680,7 +680,7 @@ class FacturaController extends Controller {
         $entity->setTipodocumento('C');
         $entity->setTipofactura($tipofactura);
         $entity->setCliente($cliente);
-        $entity->setFecha(new \DateTime());
+        $entity->setFecha(new \DateTime($request->get('fecha')));
         $entity->setImporte($request->get('resultadoFinal'));
         $condicionIva = $em->getRepository('JOYASJoyasBundle:CondicionIva')->findOneBy(array('descripcion' => $request->get('condicionivafac')));
         $cliente->setCondicioniva($condicionIva);

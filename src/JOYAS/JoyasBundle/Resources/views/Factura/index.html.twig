@@ -3,33 +3,36 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">Ventas
-                <a class="btn btn-success" href="{{ path('factura_new') }}" style="float: right;">
+                <a class="btn btn-primary" href="{{ path('factura_new') }}">
     				Registrar Venta
                 </a>
 			</h1>
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
-	<div class="row-fluid filtro">
+	<div class="row filtro">
 		<form id="searchForm" action="{{ path('factura_filtro') }}" method="POST">
-			<li class="sidebar-search" style="width">
-				<div class="input-group custom-search-form" style="width: 70%;">
-					<input type="text" style="width:30%;" value="{{app.request.get('fechaDesde')}}" id="fechaDesde" class="form-control" name="fechaDesde" placeholder="fecha desde">
-					<input type="text" style="width:30%;" value="{{app.request.get('fechaHasta')}}" id="fechaHasta" class="form-control" name="fechaHasta" placeholder="fecha hasta">
-					<select name="listado" style="width:30%;" class="form-control">
-						<option value="0">Elegir Cliente</option>
-						{% for clienteProveedor in clientesProveedores %}
-							<option value="{{ clienteProveedor.id }}">
-								{{ clienteProveedor.razonSocial }}
-							</option>
-						{% endfor %}
-			        </select>
-					<button class="btn btn-default" type="button" onclick="$('#searchForm').submit();">
-						<i class="fa fa-search"></i>
-					</button>
-				</div>
-				<!-- /input-group -->
-			</li>
+			<div class="col-md-3">
+				<input type="text" value="{{app.request.get('fechaDesde')}}" class="form-control datetimepicker" name="fechaDesde" placeholder="Fecha Desde">
+			</div>
+			<div class="col-md-3">
+				<input type="text" value="{{app.request.get('fechaHasta')}}" class="form-control datetimepicker" name="fechaHasta" placeholder="Fecha Hasta">
+			</div>
+			<div class="col-md-4">
+				<select name="listado" class="form-control">
+					<option value="0">Elegir Cliente</option>
+					{% for clienteProveedor in clientesProveedores %}
+						<option value="{{ clienteProveedor.id }}">
+							{{ clienteProveedor.razonSocial }}
+						</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="col-md-2">
+				<button class="btn btn-primary" style="margin-top:2px" type="submit">
+					Buscar
+				</button>
+			</div>
 		</form>
 	</div>
 

@@ -90,6 +90,23 @@
                         </div>
                         <div class="col-md-4">
                             <label>
+                                Condici&oacute;n frente al IVA
+                            </label>
+                            <div style="margin-bottom: 10px;">
+                                <span id="strcondicioniva"></span>
+                                <input type="hidden" name="condicionivafac" id="condicionivafac" />
+                            </div>
+                        </div>
+                        <div class="col-md-4 iva">
+                            <label>
+                                IVA
+                            </label>
+							<div style="margin-bottom: 10px;">
+								21%
+							</div>                           
+                        </div>
+                        <div class="col-md-4">
+                            <label>
                                 Punto de Venta
                             </label>
                             <div style="margin-bottom: 10px;">
@@ -102,19 +119,11 @@
                         </div>
                         <div class="col-md-4">
                             <label>
-                                Condici&oacute;n frente al IVA
+                                Fecha de Emisión
                             </label>
                             <div style="margin-bottom: 10px;">
-                                <span id="strcondicioniva"></span>
-                                <input type="hidden" name="condicionivafac" id="condicionivafac" />
+								<input type="text" name="fecha" readonly class="datetimepicker" value="{{ 'now'|date('Y-m-d') }}" />
                             </div>
-                        </div>
-                        <div class="col-md-4 iva">
-                            <label>
-                                IVA
-                            </label>
-                            <br />
-                            21%
                         </div>
                         <div style="col-md-12">
                             <table class="table table-condensed ado">
