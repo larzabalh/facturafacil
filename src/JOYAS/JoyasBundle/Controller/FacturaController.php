@@ -109,10 +109,8 @@ class FacturaController extends Controller {
             $this->sessionSvc->setSession('listado', $request->get('listado'));
         }
 
-        $unidades = $em->getRepository('JOYASJoyasBundle:UnidadNegocio')->findAll();
-        $facturas = $em->getRepository('JOYASJoyasBundle:Factura')->getPorFechas(NULL, $desde, $hasta, $listado);
-        $clientesProveedores = $em->getRepository('JOYASJoyasBundle:ClienteProveedor')->getAllCli();
-        $listaPrecios = $em->getRepository('JOYASJoyasBundle:ListaPrecio')->getAllActivas();
+        $facturas = $em->getRepository('JOYASJoyasBundle:Factura')->findEntreFechas($desde, $hasta, $listado);
+        $clientesProveedores = $em->getRepository('JOYASJoyasBundle:Cliente')->findAll();
 
         $adapter = new ArrayAdapter($facturas);
         $paginador = new Pagerfanta($adapter);
@@ -122,7 +120,6 @@ class FacturaController extends Controller {
         return $this->render('JOYASJoyasBundle:Factura:index.html.twig', array(
                     'entities' => $paginador,
                     'clientesProveedores' => $clientesProveedores,
-                    'listaPrecios' => $listaPrecios,
         ));
     }
 

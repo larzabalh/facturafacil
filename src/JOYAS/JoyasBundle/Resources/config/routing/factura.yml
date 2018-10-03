@@ -99,7 +99,7 @@ factura_delete:
     defaults: { _controller: "JOYASJoyasBundle:Factura:delete" }
     requirements: { _method: post|delete }
 
-factura_filtro:
+factura_filtroInforme:
     pattern:  /filtroInforme
     defaults: { _controller: "JOYASJoyasBundle:Factura:filtroInforme" }  
     

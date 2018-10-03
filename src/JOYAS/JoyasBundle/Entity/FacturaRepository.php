@@ -117,6 +117,21 @@ class FacturaRepository extends EntityRepository {
         return $query->getResult();
     }
 
+    public function findEntreFechas($fechaDesde, $fechaHasta, $cliente, $tipo = "F") {
+		$query = $this->getEntityManager()->createQueryBuilder()
+				->select("e")
+				->from('JOYAS\JoyasBundle\Entity\Factura', 'e')
+				->where('e.fecha <= :fechaHasta')
+				->andWhere('e.fecha >= :fechaDesde')
+				->andWhere('e.tipodocumento = :tipodocumento')
+				->orderBy('e.fecha')
+				->setParameter('fechaHasta', $fechaHasta)
+				->setParameter('fechaDesde', $fechaDesde)
+				->setParameter('tipodocumento', $tipo)
+				->getQuery();
+        return $query->getResult();
+    }
+
     public function citiventas($fechaDesde, $fechaHasta, $idusuario){
         $desde = new \DateTime($fechaDesde);
         $hasta = new \DateTime($fechaHasta);
