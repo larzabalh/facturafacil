@@ -79,7 +79,7 @@
                 </div>
                 <div class="tab-pane fade" id="factura">
                     <form action="{{ path('factura_create') }}" method="POST" id="form" onKeypress="if (event.keyCode == 13) event.returnValue = false;">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label>
                                 Cliente
                             </label>
@@ -88,7 +88,7 @@
                                 <input type="hidden" name="cliente" id="cliente" />
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label>
                                 Condici&oacute;n frente al IVA
                             </label>
@@ -97,15 +97,7 @@
                                 <input type="hidden" name="condicionivafac" id="condicionivafac" />
                             </div>
                         </div>
-                        <div class="col-md-4 iva">
-                            <label>
-                                IVA
-                            </label>
-							<div style="margin-bottom: 10px;">
-								21%
-							</div>                           
-                        </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label>
                                 Punto de Venta
                             </label>
@@ -117,12 +109,52 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label>
                                 Fecha de Emisión
                             </label>
                             <div style="margin-bottom: 10px;">
 								<input type="text" name="fecha" readonly class="datetimepicker" value="{{ 'now'|date('Y-m-d') }}" />
+                            </div>
+                        </div>
+                        <div class="col-md-3 iva">
+                            <label>
+                                IVA
+                            </label>
+							<div style="margin-bottom: 10px;">
+                                <select name="iva" class="form-control">
+                                    <option value="21">21</option>
+                                    <option value="10.5">10.5</option>
+                                    <option value="5">5</option>
+                                </select>
+							</div>                           
+                        </div>
+                        <div class="col-md-3">
+                            <label>
+                                Concepto
+                            </label>
+                            <div style="margin-bottom: 10px;">
+                                <select name="concepto" id="concepto" class="form-control">
+                                    <option value="1">Productos</option>
+                                    <option value="2">Servicios</option>
+                                    <option value="3">Productos y Servicios</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 conceptoservicio hidden">
+                            <label>
+                                Fecha de Desde
+                            </label>
+                            <div style="margin-bottom: 10px;">
+								<input type="text" name="fechadesde" readonly class="datetimepicker" value="{{ 'now'|date('Y-m-d') }}" />
+                            </div>
+                        </div>
+                        <div class="col-md-3 conceptoservicio hidden">
+                            <label>
+                                Fecha de Hasta
+                            </label>
+                            <div style="margin-bottom: 10px;">
+								<input type="text" name="fechahasta" readonly class="datetimepicker" value="{{ 'now'|date('Y-m-d') }}" />
                             </div>
                         </div>
                         <div style="col-md-12">
@@ -366,7 +398,14 @@
             }
         });
         $(document).ready(function () {
-            $('input').blur(function () {
+			$('#concepto').change(function () {
+				if($('#concepto').val()==1){
+					$('.conceptoservicio').addClass('hidden');
+				}else{
+					$('.conceptoservicio').removeClass('hidden');
+				}
+			});
+			$('input').blur(function () {
                 var str = $(this).val();
                 $(this).val(str.replace(",", "."));
                 calcularResultado();

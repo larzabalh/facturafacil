@@ -136,10 +136,22 @@ class FacturaController extends Controller {
         $usuario = $em->getRepository('JOYASJoyasBundle:Usuario')->find($this->sessionSvc->getSession('usuario')->getId());
         $entity->setUsuario($usuario);
         $tipofactura = $request->get('tipofactura');
+        $fechadesde = $request->get('fechadesde');
+        $fechahasta = $request->get('fechahasta');
+        $concepto = $request->get('concepto');
+        $iva = $request->get('iva');
         $ptovta = $request->get('puntoventa');
         $punto = $em->getRepository('JOYASJoyasBundle:PuntoVenta')->find($ptovta);
         $entity->setPunto($punto);
-
+		
+		if($concepto != 1){
+			$entity->setFechadesde(new \DateTime($fechadesde));
+			$entity->setFechahasta(new \DateTime($fechahasta));
+		}else{
+			$entity->setFechadesde(null);
+			$entity->setFechahasta(null);
+		}
+		
         $entity->setTipodocumento('F');
         $entity->setTipofactura($tipofactura);
         $entity->setCliente($cliente);
@@ -224,23 +236,18 @@ class FacturaController extends Controller {
             $cmp = $wsfe->FECompUltimoAutorizado($tipocbte, $punto->getNumero(), $cuitEmisor);
 
             //Armo array con valores hardcodeados de la factura.
-            $regfac['concepto'] = 1;                  # 1: productos, 2: servicios, 3: ambos
+            $regfac['concepto'] = $concepto;
+			$regfac['fechadesde'] = !empty($entity->getFechadesde()) ? $entity->getFechadesde()->format('Ymd') : "";
+			$regfac['fechahasta'] = !empty($entity->getFechahasta()) ? $entity->getFechahasta()->format('Ymd') : "";
+			$regfac['fechaemision'] = $entity->getFecha()->format('Ymd');
 
-            if ($request->get('condicionivafac') == 'Consumidor Final') {
-                $regfac['tipodocumento'] = 99;                  # 80: CUIT, 96: DNI, 99: Consumidor Final
-                if ($entity->getImporte() >= 1000) {
-                    $regfac['numerodocumento'] = $cliente->getDni();
-                } else {
-                    $regfac['numerodocumento'] = 0;                 # 0 para Consumidor Final (<$1000)
-                }
-            } else {
-                $regfac['numerodocumento'] = $cliente->getDni();
-                if ($cliente->getCuit()) {
-                    $regfac['tipodocumento'] = 80;                  # 80: CUIT, 96: DNI, 99: Consumidor Final
-                } else {
-                    $regfac['tipodocumento'] = 96;                  # 80: CUIT, 96: DNI, 99: Consumidor Final
-                }
-            }
+			$regfac['numerodocumento'] = $cliente->getDni();
+			
+			if ($cliente->getCuit()) {
+				$regfac['tipodocumento'] = 80;                  # 80: CUIT, 96: DNI, 99: Consumidor Final
+			} else {
+				$regfac['tipodocumento'] = 96;                  # 80: CUIT, 96: DNI, 99: Consumidor Final
+			}
 
             $regfac['cuit'] = str_replace("-", "", $cliente->getCuit());
             $regfac['capitalafinanciar'] = 0;           # subtotal de conceptos no gravados
@@ -268,6 +275,8 @@ class FacturaController extends Controller {
 
             //Solicito el CAE
             $cae = $wsfe->solicitarCAE($params, $cuitEmisor);
+			// print_r($cae);
+			// die();
             if ($cae->FECAESolicitarResult->FeCabResp->Resultado == 'A' or $cae->FECAESolicitarResult->FeCabResp->Resultado == 'P') {
                 $em->flush();
                 $entity->setNrofactura($regfac['nrofactura']);
@@ -670,9 +679,21 @@ class FacturaController extends Controller {
         $entity->setUsuario($usuario);
 
         $tipofactura = $request->get('tipofactura');
+        $fechadesde = $request->get('fechadesde');
+        $fechahasta = $request->get('fechahasta');
+        $concepto = $request->get('concepto');
+        $iva = $request->get('iva');
         $ptovta = $request->get('puntoventa');
         $punto = $em->getRepository('JOYASJoyasBundle:PuntoVenta')->find($ptovta);
         $entity->setPunto($punto);
+
+		if($concepto != 1){
+			$entity->setFechadesde(new \DateTime($fechadesde));
+			$entity->setFechahasta(new \DateTime($fechahasta));
+		}else{
+			$entity->setFechadesde(null);
+			$entity->setFechahasta(null);
+		}
 
         $entity->setTipodocumento('C');
         $entity->setTipofactura($tipofactura);
@@ -761,8 +782,11 @@ class FacturaController extends Controller {
 
 
             //Armo array con valores hardcodeados de la factura.
-            $regfac['concepto'] = 1;                  # 1: productos, 2: servicios, 3: ambos
-
+            $regfac['concepto'] = $concepto;                  # 1: productos, 2: servicios, 3: ambos
+			$regfac['fechadesde'] = !empty($entity->getFechadesde()) ? $entity->getFechadesde()->format('Ymd') : "";
+			$regfac['fechahasta'] = !empty($entity->getFechahasta()) ? $entity->getFechahasta()->format('Ymd') : "";
+			$regfac['fechaemision'] = $entity->getFecha()->format('Ymd');
+			
             if ($request->get('condicionivafac') == 'Consumidor Final') {
                 $regfac['tipodocumento'] = 99;                  # 80: CUIT, 96: DNI, 99: Consumidor Final
                 if ($entity->getImporte() >= 1000) {
@@ -950,7 +974,10 @@ class FacturaController extends Controller {
             $cmp = $wsfe->FECompUltimoAutorizado($tipocbte, $ptovta, $cuitEmisor);
 
 
-            $regfac['concepto'] = 1;                  # 1: productos, 2: servicios, 3: ambos
+            $regfac['concepto'] = !empty($entity->getFechadesde()) ? 2 : 1;                  # 1: productos, 2: servicios, 3: ambos
+			$regfac['fechadesde'] = !empty($entity->getFechadesde()) ? $entity->getFechadesde()->format('Ymd') : "";
+			$regfac['fechahasta'] = !empty($entity->getFechahasta()) ? $entity->getFechahasta()->format('Ymd') : "";
+			$regfac['fechaemision'] = $entity->getFecha()->format('Ymd');
 
             if ($entity->getCliente()->getCondicioniva() == 'Consumidor Final') {
                 $regfac['tipodocumento'] = 99;                  # 80: CUIT, 96: DNI, 99: Consumidor Final
@@ -1066,7 +1093,10 @@ class FacturaController extends Controller {
 
 
             //Armo array con valores hardcodeados de la factura.
-            $regfac['concepto'] = 1;                  # 1: productos, 2: servicios, 3: ambos
+            $regfac['concepto'] = !empty($entity->getFechadesde()) ? 2 : 1; # 1: productos, 2: servicios, 3: ambos
+			$regfac['fechadesde'] = !empty($entity->getFechadesde()) ? $entity->getFechadesde()->format('Ymd') : "";
+			$regfac['fechahasta'] = !empty($entity->getFechahasta()) ? $entity->getFechahasta()->format('Ymd') : "";
+			$regfac['fechaemision'] = $entity->getFecha()->format('Ymd');
 
             if ($entity->getCliente()->getCondicioniva() == 'Consumidor Final') {
                 $regfac['tipodocumento'] = 99;                  # 80: CUIT, 96: DNI, 99: Consumidor Final
