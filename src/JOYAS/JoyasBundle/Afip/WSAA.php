@@ -183,13 +183,13 @@ class WSAA {
         $this->TA = $this->xml2Array($TA_xml);
         $r = $this->TA['header']['expirationTime'];
       } else {
-        $r = false;
+        $r = null;
       }      
     } else {
       $r = $this->TA['header']['expirationTime'];
     }
      
-    return $r;
+    return !empty($r) ? new \DateTime($r) : $r;
   }
    
 }

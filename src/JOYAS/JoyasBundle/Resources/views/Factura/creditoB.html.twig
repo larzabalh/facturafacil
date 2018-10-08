@@ -46,6 +46,16 @@
                             Fecha de Inicio de Actividades: <span style="font-weight: normal;">{{usuario.fechainicio}}</span>
                         </th>
                     </tr>
+                    {% if entity.fechadesde %}
+                    <tr style="border: 1px solid;">
+                        <th colspan="5" style="text-align:center;">
+                            Fecha del Servicio
+                            Desde: <span style="font-weight: normal;">{{entity.fechadesde|date('d-m-Y')}}</span>
+                            -
+                            Hasta: <span style="font-weight: normal;">{{entity.fechahasta|date('d-m-Y')}}</span>
+                        </th>
+                    </tr>
+                    {% endif %}
                     <tr>
                         <th colspan="2" style="">
                             {% if entity.cliente.cuit %}

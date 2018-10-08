@@ -197,12 +197,11 @@ class FacturaController extends Controller {
             $wsaa = new WSAA('./');
 
             // Si la fecha de expiracion es menor a hoy, obtengo un nuevo Ticket de Acceso.
-            if ($wsaa->get_expiration() < date("Y-m-d h:m:i")) {
-                if ($wsaa->generar_TA()) {
-
-                } else {
+			$now = new \DateTime('NOW');
+            if ($wsaa->get_expiration() and  $wsaa->get_expiration() < $now ) {
+                if (!$wsaa->generar_TA()) {
                     $this->sessionSvc->addFlash('msgError', 'Error al obtener el ticket de acceso.');
-                    return $this->redirect($this->generateUrl('factura_new'));
+                    return $this->redirect($this->generateUrl('factura'));
                 }
             }
 
@@ -275,9 +274,7 @@ class FacturaController extends Controller {
 
             //Solicito el CAE
             $cae = $wsfe->solicitarCAE($params, $cuitEmisor);
-			// print_r($cae);
-			// die();
-            if ($cae->FECAESolicitarResult->FeCabResp->Resultado == 'A' or $cae->FECAESolicitarResult->FeCabResp->Resultado == 'P') {
+			if ($cae->FECAESolicitarResult->FeCabResp->Resultado == 'A' or $cae->FECAESolicitarResult->FeCabResp->Resultado == 'P') {
                 $em->flush();
                 $entity->setNrofactura($regfac['nrofactura']);
                 $entity->setCae($cae->FECAESolicitarResult->FeDetResp->FECAEDetResponse->CAE);
@@ -741,12 +738,11 @@ class FacturaController extends Controller {
             $wsaa = new WSAA('./');
 
             // Si la fecha de expiracion es menor a hoy, obtengo un nuevo Ticket de Acceso.
-            if ($wsaa->get_expiration() < date("Y-m-d h:m:i")) {
-                if ($wsaa->generar_TA()) {
-
-                } else {
+			$now = new \DateTime('NOW');
+            if ($wsaa->get_expiration() and  $wsaa->get_expiration() < $now ) {
+                if (!$wsaa->generar_TA()) {
                     $this->sessionSvc->addFlash('msgError', 'Error al obtener el ticket de acceso.');
-                    return $this->redirect($this->generateUrl('factura_newcredito'));
+                    return $this->redirect($this->generateUrl('factura'));
                 }
             }
 
@@ -945,16 +941,14 @@ class FacturaController extends Controller {
             $wsaa = new WSAA('./');
 
             // Si la fecha de expiracion es menor a hoy, obtengo un nuevo Ticket de Acceso.
-            if ($wsaa->get_expiration() < date("Y-m-d h:m:i")) {
-                if ($wsaa->generar_TA()) {
-
-                } else {
+			$now = new \DateTime('NOW');
+            if ($wsaa->get_expiration() and  $wsaa->get_expiration() < $now ) {
+                if (!$wsaa->generar_TA()) {
                     $this->sessionSvc->addFlash('msgError', 'Error al obtener el ticket de acceso.');
                     return $this->redirect($this->generateUrl('factura'));
                 }
             }
-
-
+			echo $wsaa->get_expiration()->format('Y-m-d');
             $wsfe = new WSFEV1('./');
 
             // Carga el archivo TA.xml
@@ -1021,7 +1015,7 @@ class FacturaController extends Controller {
 
             //Solicito el CAE
             $cae = $wsfe->solicitarCAE($params, $cuitEmisor);
-            if ($cae->FECAESolicitarResult->FeCabResp->Resultado == 'A' or $cae->FECAESolicitarResult->FeCabResp->Resultado == 'P') {
+			if ($cae->FECAESolicitarResult->FeCabResp->Resultado == 'A' or $cae->FECAESolicitarResult->FeCabResp->Resultado == 'P') {
                 $entity->setNrofactura($regfac['nrofactura']);
                 $entity->setCae($cae->FECAESolicitarResult->FeDetResp->FECAEDetResponse->CAE);
                 $busco = json_encode($cae->FECAESolicitarResult->FeDetResp->FECAEDetResponse);
@@ -1061,10 +1055,9 @@ class FacturaController extends Controller {
             $wsaa = new WSAA('./');
 
             // Si la fecha de expiracion es menor a hoy, obtengo un nuevo Ticket de Acceso.
-            if ($wsaa->get_expiration() < date("Y-m-d h:m:i")) {
-                if ($wsaa->generar_TA()) {
-
-                } else {
+			$now = new \DateTime('NOW');
+            if ($wsaa->get_expiration() and  $wsaa->get_expiration() < $now ) {
+                if (!$wsaa->generar_TA()) {
                     $this->sessionSvc->addFlash('msgError', 'Error al obtener el ticket de acceso.');
                     return $this->redirect($this->generateUrl('factura'));
                 }
