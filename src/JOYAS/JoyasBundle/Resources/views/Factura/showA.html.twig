@@ -207,9 +207,6 @@
         <a class="btn btn-default" href="javascript:imprSelec()">
             Imprimir
         </a>
-        <a class="btn btn-default" id="print">
-            Capturar
-        </a>
         <a class="btn btn-default" href="{{ path('factura') }}">
             Volver
         </a>
@@ -240,20 +237,6 @@
             $('#condicionIVA').html(condicionIVA);
             $('#ingresosBrutos').html(ingresosBrutos);
             $('#fechaInicioActividades').html(fechaInicioActividades);
-            $("#print").click(function (e) {
-                e.preventDefault();
-                html2canvas($("#imprimir"), {
-                    background: '#fff',
-                    onrendered: function (canvas) {
-                        var myImage = canvas.toDataURL("image/png");
-                        $('#oculto').css('display', 'none');
-                        window.open(myImage);
-                        window.document.close(); // necessary for IE >= 10
-                        window.focus(); // necessary for IE >= 10
-                        $('#oculto').css('display', 'block');
-                    }
-                });
-            });
         });
 
 
