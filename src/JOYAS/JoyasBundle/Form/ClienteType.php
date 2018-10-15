@@ -21,6 +21,7 @@ class ClienteType extends AbstractType
     		->add('condicioniva', 'entity', array (
     			'class' => 'JOYASJoyasBundle:CondicionIva',
     			'label' => $options['condicioniva'],
+                'empty_value' => false,
     			'query_builder' => function (\JOYAS\JoyasBundle\Entity\CondicionIvaRepository $repository)
     				 {
     					 return $repository->createQueryBuilder('u')

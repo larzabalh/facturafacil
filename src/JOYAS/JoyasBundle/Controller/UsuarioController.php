@@ -77,12 +77,13 @@ class UsuarioController extends Controller {
             }
             if ($form->isValid()) {
                 $file = $form['logo']->getData();
-    			if($file){
+                if($file){
     				if($file->getSize()>0){
     					$strm = fopen($file->getRealPath(),'rb');
     					$entity->setImagen('data:'.$file->getClientMimeType().'/'.$file->getClientOriginalExtension().';base64,'.base64_encode(stream_get_contents(($strm))));
     				}
     			}
+                $entity->setCuit(str_replace('-', '', $entity->getCuit()));
                 $em->persist($entity);
                 $em->flush();
 
@@ -230,6 +231,7 @@ class UsuarioController extends Controller {
                     $entity->setImagen('data:'.$file->getClientMimeType().'/'.$file->getClientOriginalExtension().';base64,'.base64_encode(stream_get_contents(($strm))));
                 }
             }
+            $entity->setCuit(str_replace('-', '', $entity->getCuit()));
             $em->flush();
             $this->sessionSvc->addFlash('msgOk', 'Usuario modificado exitosamente.');
             return $this->redirect($this->generateUrl('usuario'));

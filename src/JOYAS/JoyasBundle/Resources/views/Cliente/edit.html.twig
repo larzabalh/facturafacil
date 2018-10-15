@@ -15,9 +15,9 @@
 		</div>
 	</div>
 <script>
-	activarActionsTab('clienteproveedor');
 	$(document).ready(function (){
-		$("input").attr('class','form-control');
+        $("input").removeAttr('required');
+		$("#joyas_joyasbundle_cliente_cuit, #joyas_joyasbundle_cliente_login, #joyas_joyasbundle_cliente_clave, #joyas_joyasbundle_cliente_razonsocial").attr('required', 'required');
 	});
 
 </script>

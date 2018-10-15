@@ -55,7 +55,7 @@ class ClienteController extends Controller
 
     /**
      * Creates a new Cliente entity.
-     *
+     * 23-37853378-3
      */
     public function createAction(Request $request)
     {
@@ -67,6 +67,7 @@ class ClienteController extends Controller
 		$entity->setUsuario($usuario);
 
 		if ($form->isValid()){
+			$entity->setCuit(str_replace('-', '', $entity->getCuit()));
             $em->persist($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('cliente'));
@@ -446,6 +447,7 @@ class ClienteController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()){
+			$entity->setCuit(str_replace('-', '', $entity->getCuit()));
             $em->flush();
 
             return $this->redirect($this->generateUrl('cliente'));

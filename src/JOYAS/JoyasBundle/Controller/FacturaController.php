@@ -143,7 +143,7 @@ class FacturaController extends Controller {
         $ptovta = $request->get('puntoventa');
         $punto = $em->getRepository('JOYASJoyasBundle:PuntoVenta')->find($ptovta);
         $entity->setPunto($punto);
-		
+
 		if($concepto != 1){
 			$entity->setFechadesde(new \DateTime($fechadesde));
 			$entity->setFechahasta(new \DateTime($fechahasta));
@@ -151,7 +151,7 @@ class FacturaController extends Controller {
 			$entity->setFechadesde(null);
 			$entity->setFechahasta(null);
 		}
-		
+
         $entity->setTipodocumento('F');
         $entity->setTipofactura($tipofactura);
         $entity->setCliente($cliente);
@@ -241,7 +241,7 @@ class FacturaController extends Controller {
 			$regfac['fechaemision'] = $entity->getFecha()->format('Ymd');
 
 			$regfac['numerodocumento'] = $cliente->getDni();
-			
+
 			if ($cliente->getCuit()) {
 				$regfac['tipodocumento'] = 80;                  # 80: CUIT, 96: DNI, 99: Consumidor Final
 			} else {
@@ -558,7 +558,7 @@ class FacturaController extends Controller {
         $cliente = new Cliente();
         $cliente->setRazonSocial($razon);
         if ($tipo == 'CUIT') {
-            $cliente->setCuit($nrodoc);
+            $cliente->setCuit(str_replace('-', '', $nrodoc));
         } else {
             $cliente->setDni($nrodoc);
         }
@@ -782,7 +782,7 @@ class FacturaController extends Controller {
 			$regfac['fechadesde'] = !empty($entity->getFechadesde()) ? $entity->getFechadesde()->format('Ymd') : "";
 			$regfac['fechahasta'] = !empty($entity->getFechahasta()) ? $entity->getFechahasta()->format('Ymd') : "";
 			$regfac['fechaemision'] = $entity->getFecha()->format('Ymd');
-			
+
             if ($request->get('condicionivafac') == 'Consumidor Final') {
                 $regfac['tipodocumento'] = 99;                  # 80: CUIT, 96: DNI, 99: Consumidor Final
                 if ($entity->getImporte() >= 1000) {

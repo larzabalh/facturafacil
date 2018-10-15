@@ -16,7 +16,8 @@
 
 <script>
 	$(document).ready(function (){
-		$("#joyas_joyasbundle_usuario_logo").removeAttr('required');
+		$("input").removeAttr('required');
+		$("#joyas_joyasbundle_usuario_cuit, #joyas_joyasbundle_usuario_login, #joyas_joyasbundle_usuario_clave, #joyas_joyasbundle_usuario_razonsocial").attr('required', 'required');
 	});
 </script>
 {% endblock %}
