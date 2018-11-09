@@ -213,6 +213,17 @@ class WSFEV1{
 					}
 				}
 				break;
+            case 'C':
+				if($nc==''){
+					$CbteTipo = 11;
+				}else{
+					if($nc=='SI'){
+						$CbteTipo = 13;
+					}else{
+						$CbteTipo = 12;
+					}
+				}
+				break;
         }
 
         $FeCabReq = array('CantReg' => 1, 'PtoVta' => $puntoventa, 'CbteTipo' => $CbteTipo);

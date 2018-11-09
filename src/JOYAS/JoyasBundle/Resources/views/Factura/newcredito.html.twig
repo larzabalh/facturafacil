@@ -130,7 +130,7 @@
                                     <option value="2.5">2.5</option>
                                     <option value="0">0</option>
                                 </select>
-							</div>                           
+							</div>
                         </div>
                         <div class="col-md-3">
                             <label>
@@ -290,6 +290,7 @@
     <script>
         var contador = 1;
         var moneda = '$';
+        var condicionIvaEmisor = '{{condicionIvaEmisor}}';
 
         function borrarDatos() {
             $('#cantidad0').val('');
@@ -324,7 +325,7 @@
 
             contador = contador + 1;
             var cond = $('#condicioniva option:selected').text();
-            if (cond == 'Responsable Inscripto') {
+            if (cond == 'Responsable Inscripto' && condicionIvaEmisor != 'Responsable Monotributo') {
                 $('.iva').removeClass('hidden');
             } else {
                 $('.iva').addClass('hidden');
@@ -364,7 +365,7 @@
             $('#desc').html(moneda + ' ' + resiva);
             $('#resultadoiva').html(resiva);
             var cond = $('#condicioniva option:selected').text();
-            if (cond == 'Responsable Inscripto') {
+            if (cond == 'Responsable Inscripto' && condicionIvaEmisor != 'Responsable Monotributo') {
                 total = parseFloat(subtotal) + resiva;
             } else {
                 total = parseFloat(subtotal);
@@ -381,9 +382,12 @@
                 $('#strcondicioniva').html(cond);
                 $('#condicionivafac').val(cond);
                 $('#verfactura').css('display', 'block');
-                if (cond == 'Responsable Inscripto') {
+                if (cond == 'Responsable Inscripto' && condicionIvaEmisor != 'Responsable Monotributo') {
                     $('.iva').removeClass('hidden');
                     $('#tipofactura').val('A');
+                } else if (condicionIvaEmisor == 'Responsable Monotributo') {
+                    $('.iva').addClass('hidden');
+                    $('#tipofactura').val('C');
                 } else {
                     $('.iva').addClass('hidden');
                     $('#tipofactura').val('B');
@@ -420,8 +424,10 @@
         });
         function vercondicion() {
             var cond = $('#condicioniva option:selected').text();
-            if (cond == 'Responsable Inscripto') {
+            if (cond == 'Responsable Inscripto' && condicionIvaEmisor != 'Responsable Monotributo') {
                 $('#tipofactura').val('A');
+            } else if (condicionIvaEmisor == 'Responsable Monotributo') {
+                $('#tipofactura').val('C');
             } else {
                 $('#tipofactura').val('B');
             }

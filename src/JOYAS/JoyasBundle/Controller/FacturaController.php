@@ -134,6 +134,7 @@ class FacturaController extends Controller {
 
         $cliente = $em->getRepository('JOYASJoyasBundle:Cliente')->find($request->get('cliente'));
         $usuario = $em->getRepository('JOYASJoyasBundle:Usuario')->find($this->sessionSvc->getSession('usuario')->getId());
+
         $entity->setUsuario($usuario);
         $tipofactura = $request->get('tipofactura');
         $fechadesde = $request->get('fechadesde');
@@ -159,10 +160,10 @@ class FacturaController extends Controller {
         $entity->setImporte($request->get('resultadoFinal'));
         $condicionIva = $em->getRepository('JOYASJoyasBundle:CondicionIva')->findOneBy(array('descripcion' => $request->get('condicionivafac')));
         $cliente->setCondicioniva($condicionIva);
-        $em->flush();
         $contador = $request->get('contador');
 
         $em->persist($entity);
+        $em->flush();
 
         for ($x = 0; $x <= $contador; $x++) {
             $descripcion = $request->get('descripcion' . $x);
@@ -212,12 +213,12 @@ class FacturaController extends Controller {
             $wsfe->openTA();
 
             // devuelve el cae
-            if ($request->get('condicionivafac') == 'Responsable Inscripto') {
+            if ($tipofactura == 'A') {
                 $tipocbte = 01;
-                $tipofactura = 'A';
+            } elseif ($tipofactura == 'C') {
+                $tipocbte = 11;
             } else {
                 $tipocbte = 06;
-                $tipofactura = 'B';
             }
 
             /*
@@ -250,15 +251,15 @@ class FacturaController extends Controller {
 
             $regfac['cuit'] = str_replace("-", "", $cliente->getCuit());
             $regfac['capitalafinanciar'] = 0;           # subtotal de conceptos no gravados
-            if ($request->get('condicionivafac') == 'Responsable Inscripto') {
+            if ($tipofactura == 'A') {
                 $regfac['importetotal'] = round($entity->getImporte(), 2); # total del comprobante
                 $regfac['importeiva'] = round(($entity->getImporte() - ($entity->getImporte() / 1.21)), 2);   # subtotal neto sujeto a IVA
                 $regfac['importeneto'] = round(($entity->getImporte() / 1.21), 2);
             } else {
                 $regfac['importetotal'] = $entity->getImporte(); # total del comprobante
-                $regfac['importeiva'] = 0;
-                $regfac['importeneto'] = 0;   # subtotal neto sujeto a IVA
-                $regfac['capitalafinanciar'] = $entity->getImporte();
+                $regfac['importeneto'] = ($tipofactura=='C') ? $entity->getImporte() : 0;
+                $regfac['importeiva'] = 0;   # subtotal neto sujeto a IVA
+                $regfac['capitalafinanciar'] = ($tipofactura=='B') ? $entity->getImporte() : 0;
             }
 
             $regfac['imp_trib'] = 1.0;
@@ -291,8 +292,8 @@ class FacturaController extends Controller {
 
                 return $this->redirect($this->generateUrl('factura_show', array('id' => $entity->getId(), 'tipo' => 'F')));
             } else {
-                $em->remove($entity);
-                $em->flush();
+                // $em->remove($entity);
+                // $em->flush();
 
                 if ($cae->FECAESolicitarResult->FeCabResp->Resultado == 'R') {
                     $this->sessionSvc->addFlash('msgError', 'Error al dar de alta factura: ' . json_encode($cae->FECAESolicitarResult->FeDetResp->FECAEDetResponse->Observaciones));
@@ -337,10 +338,12 @@ class FacturaController extends Controller {
         $entity = new Factura();
         $puntos = $em->getRepository('JOYASJoyasBundle:PuntoVenta')->findBy(array("usuario"=>$this->sessionSvc->getSession('usuario')->getId()));
         $condiciones = $em->getRepository('JOYASJoyasBundle:CondicionIva')->findAll();
+        $condicionIvaEmisor = $em->getRepository('JOYASJoyasBundle:Usuario')->find($this->sessionSvc->getSession('usuario')->getId())->getCondicioniva()->getDescripcion();
 
         return $this->render('JOYASJoyasBundle:Factura:new.html.twig', array(
             'entity' => $entity,
             'condiciones' => $condiciones,
+            'condicionIvaEmisor' => $condicionIvaEmisor,
             'puntos' => $puntos
         ));
     }
@@ -354,10 +357,13 @@ class FacturaController extends Controller {
         $entity = new Factura();
         $condiciones = $em->getRepository('JOYASJoyasBundle:CondicionIva')->findAll();
         $puntos = $em->getRepository('JOYASJoyasBundle:PuntoVenta')->findBy(array("usuario"=>$this->sessionSvc->getSession('usuario')->getId()));
+        $condicionIvaEmisor = $em->getRepository('JOYASJoyasBundle:Usuario')->find($this->sessionSvc->getSession('usuario')->getId())->getCondicioniva()->getDescripcion();
+
 
         return $this->render('JOYASJoyasBundle:Factura:newcredito.html.twig', array(
             'entity' => $entity,
             'condiciones' => $condiciones,
+            'condicionIvaEmisor' => $condicionIvaEmisor,
             'puntos' => $puntos
         ));
     }
@@ -375,18 +381,24 @@ class FacturaController extends Controller {
                 return $this->render('JOYASJoyasBundle:Factura:showA.html.twig', array(
                             'entity' => $entity));
             }
-            if ($entity->getTipofactura() == 'B') {
+            if ($entity->getTipofactura() == 'B' or $entity->getTipofactura() == 'C') {
                 return $this->render('JOYASJoyasBundle:Factura:showB.html.twig', array(
-                            'entity' => $entity));
+                            'entity' => $entity,
+                            'tipofactura' => $entity->getTipofactura(),
+                            'nrocomprobante' => ($entity->getTipofactura()=='C') ? '11'  : '06'
+                            ));
             }
         } else {
             if ($entity->getTipofactura() == 'A') {
                 return $this->render('JOYASJoyasBundle:Factura:creditoA.html.twig', array(
                             'entity' => $entity));
             }
-            if ($entity->getTipofactura() == 'B') {
+            if ($entity->getTipofactura() == 'B' or $entity->getTipofactura() == 'C') {
                 return $this->render('JOYASJoyasBundle:Factura:creditoB.html.twig', array(
-                            'entity' => $entity));
+                            'entity' => $entity,
+                            'tipofactura' => $entity->getTipofactura(),
+                            'nrocomprobante' => ($entity->getTipofactura()=='C') ? '13'  : '08'
+                            ));
             }
         }
     }
@@ -699,10 +711,10 @@ class FacturaController extends Controller {
         $entity->setImporte($request->get('resultadoFinal'));
         $condicionIva = $em->getRepository('JOYASJoyasBundle:CondicionIva')->findOneBy(array('descripcion' => $request->get('condicionivafac')));
         $cliente->setCondicioniva($condicionIva);
-        $em->flush();
         $contador = $request->get('contador');
 
         $em->persist($entity);
+        $em->flush();
 
         for ($x = 0; $x <= $contador; $x++) {
             $descripcion = $request->get('descripcion' . $x);
@@ -752,13 +764,12 @@ class FacturaController extends Controller {
             // Carga el archivo TA.xml
             $wsfe->openTA();
 
-            // devuelve el cae
-            if ($request->get('condicionivafac') == 'Responsable Inscripto') {
+            if ($tipofactura == 'A') {
                 $tipocbte = 3;
-                $tipofactura = 'A';
+            } elseif ($tipofactura == 'C') {
+                $tipocbte = 13;
             } else {
                 $tipocbte = 8;
-                $tipofactura = 'B';
             }
 
             /*
@@ -801,15 +812,15 @@ class FacturaController extends Controller {
 
             $regfac['cuit'] = str_replace("-", "", $cliente->getCuit());
             $regfac['capitalafinanciar'] = 0;           # subtotal de conceptos no gravados
-            if ($request->get('condicionivafac') == 'Responsable Inscripto') {
+            if ($tipofactura == 'A') {
                 $regfac['importetotal'] = round($entity->getImporte(), 2); # total del comprobante
                 $regfac['importeiva'] = round(($entity->getImporte() - ($entity->getImporte() / 1.21)), 2);   # subtotal neto sujeto a IVA
                 $regfac['importeneto'] = round(($entity->getImporte() / 1.21), 2);
             } else {
                 $regfac['importetotal'] = $entity->getImporte(); # total del comprobante
-                $regfac['importeiva'] = 0;
-                $regfac['importeneto'] = 0;   # subtotal neto sujeto a IVA
-                $regfac['capitalafinanciar'] = $entity->getImporte();
+                $regfac['importeneto'] = ($tipofactura=='C') ? $entity->getImporte() : 0;
+                $regfac['importeiva'] = 0;   # subtotal neto sujeto a IVA
+                $regfac['capitalafinanciar'] = ($tipofactura=='B') ? $entity->getImporte() : 0;
             }
 
             $regfac['imp_trib'] = 1.0;
@@ -843,8 +854,8 @@ class FacturaController extends Controller {
 
                 return $this->redirect($this->generateUrl('factura_show', array('id' => $entity->getId(), 'tipo' => 'C')));
             } else {
-                $em->remove($entity);
-                $em->flush();
+                // $em->remove($entity);
+                // $em->flush();
 
                 if ($cae->FECAESolicitarResult->FeCabResp->Resultado == 'R') {
                     $this->sessionSvc->addFlash('msgError', 'Error al dar de alta la nota: ' . json_encode($cae->FECAESolicitarResult->FeDetResp->FECAEDetResponse->Observaciones));
@@ -954,13 +965,12 @@ class FacturaController extends Controller {
             // Carga el archivo TA.xml
             $wsfe->openTA();
 
-            // devuelve el cae
-            if ($entity->getCliente()->getCondicioniva() == 'Responsable Inscripto') {
+            if ($tipofactura == 'A') {
                 $tipocbte = 01;
-                $tipofactura = 'A';
+            } elseif ($tipofactura == 'C') {
+                $tipocbte = 11;
             } else {
                 $tipocbte = 06;
-                $tipofactura = 'B';
             }
 
             $cuitEmisor = $this->sessionSvc->getSession('usuario')->getCuit();
@@ -991,15 +1001,15 @@ class FacturaController extends Controller {
 
             $regfac['cuit'] = str_replace("-", "", $entity->getCliente()->getCuit());
             $regfac['capitalafinanciar'] = 0;           # subtotal de conceptos no gravados
-            if ($entity->getCliente()->getCondicioniva() == 'Responsable Inscripto') {
+            if ($tipofactura == 'A') {
                 $regfac['importetotal'] = round($entity->getImporte(), 2); # total del comprobante
                 $regfac['importeiva'] = round(($entity->getImporte() - ($entity->getImporte() / 1.21)), 2);   # subtotal neto sujeto a IVA
                 $regfac['importeneto'] = round(($entity->getImporte() / 1.21), 2);
             } else {
                 $regfac['importetotal'] = $entity->getImporte(); # total del comprobante
-                $regfac['importeiva'] = 0;
-                $regfac['importeneto'] = 0;   # subtotal neto sujeto a IVA
-                $regfac['capitalafinanciar'] = $entity->getImporte();
+                $regfac['importeneto'] = ($tipofactura=='C') ? $entity->getImporte() : 0;
+                $regfac['importeiva'] = 0;   # subtotal neto sujeto a IVA
+                $regfac['capitalafinanciar'] = ($tipofactura=='B') ? $entity->getImporte() : 0;
             }
 
             $regfac['imp_trib'] = 1.0;
@@ -1069,13 +1079,12 @@ class FacturaController extends Controller {
             // Carga el archivo TA.xml
             $wsfe->openTA();
 
-            // devuelve el cae
-            if ($entity->getCliente()->getCondicioniva() == 'Responsable Inscripto') {
+            if ($tipofactura == 'A') {
                 $tipocbte = 3;
-                $tipofactura = 'A';
+            } elseif ($tipofactura == 'C') {
+                $tipocbte = 13;
             } else {
                 $tipocbte = 8;
-                $tipofactura = 'B';
             }
 
             $nc = 'SI';
@@ -1109,15 +1118,15 @@ class FacturaController extends Controller {
 
             $regfac['cuit'] = str_replace("-", "", $entity->getCliente()->getCuit());
             $regfac['capitalafinanciar'] = 0;           # subtotal de conceptos no gravados
-            if ($entity->getCliente()->getCondicioniva() == 'Responsable Inscripto') {
+            if ($tipofactura == 'A') {
                 $regfac['importetotal'] = round($entity->getImporte(), 2); # total del comprobante
                 $regfac['importeiva'] = round(($entity->getImporte() - ($entity->getImporte() / 1.21)), 2);   # subtotal neto sujeto a IVA
                 $regfac['importeneto'] = round(($entity->getImporte() / 1.21), 2);
             } else {
                 $regfac['importetotal'] = $entity->getImporte(); # total del comprobante
-                $regfac['importeiva'] = 0;
-                $regfac['importeneto'] = 0;   # subtotal neto sujeto a IVA
-                $regfac['capitalafinanciar'] = $entity->getImporte();
+                $regfac['importeneto'] = ($tipofactura=='C') ? $entity->getImporte() : 0;
+                $regfac['importeiva'] = 0;   # subtotal neto sujeto a IVA
+                $regfac['capitalafinanciar'] = ($tipofactura=='B') ? $entity->getImporte() : 0;
             }
 
             $regfac['imp_trib'] = 1.0;
@@ -1150,8 +1159,8 @@ class FacturaController extends Controller {
 
                 return $this->redirect($this->generateUrl('factura_show', array('id' => $entity->getId(), 'tipo' => 'C')));
             } else {
-                $em->remove($entity);
-                $em->flush();
+                // $em->remove($entity);
+                // $em->flush();
 
                 if ($cae->FECAESolicitarResult->FeCabResp->Resultado == 'R') {
                     $this->sessionSvc->addFlash('msgError', 'Error al dar de alta la nota: ' . json_encode($cae->FECAESolicitarResult->FeDetResp->FECAEDetResponse->Observaciones));
